@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>星海观测室 · 采集来源</title>
+<style>
+  :root{color-scheme:dark;font:16px/1.6 system-ui,sans-serif;background:#09131e;color:#d7eef7}
+  body{max-width:680px;padding:32px 20px;margin:auto}h1{font-size:24px;font-weight:500}
+  label{display:block;margin:22px 0}select{display:block;margin-top:8px;width:100%;padding:10px;background:#122b3b;border:1px solid #365569;color:inherit;font:inherit}
+  p{color:#a4c6d8}#message{color:#d7eef7}small{color:#81aabd}
+</style>
+<h1>星海观测室 · 采集来源</h1>
+<p>选择本次安装使用的网卡与 CPU 温度来源。更改会保存在当前采集器目录，并重新累计对应趋势。</p>
+<label>网卡<select id="adapter"><option value="">等待采集</option></select></label>
+<label>CPU 温度来源<select id="source"><option value="hwinfo_csv">HWiNFO CPU Package 日志</option><option value="alienware_wmi">Alienware 固件导出</option></select></label>
+<label id="csv-row">HWiNFO 温度列<select id="csv"><option value="">等待日志</option></select></label>
+<label id="awcc-row" hidden>Alienware CPU 温度编号<select id="awcc"><option value="">请根据实际设备显示确认 CPU 归属</option></select></label>
+<p id="message" role="status">等待采集器</p>
+<small>画面、读数归属与运行表现由使用者人眼检验。</small>
+<script>
+  const $=id=>document.getElementById(id);
+  let saving=false;
+  function options(id,rows,selected){
+    const node=$(id);
+    if(document.activeElement===node)return;
+    node.replaceChildren();
+    const first=document.createElement('option');first.value='';first.textContent='请选择';node.append(first);
+    for(const [value,label]of rows){const option=document.createElement('option');option.value=value;option.textContent=label;node.append(option);}
+    node.value=selected||'';node.disabled=rows.length===0;
+  }
+  async function refresh(){
+    if(saving)return;
+    try{
+      const response=await fetch('/api/v1/snapshot',{cache:'no-store'});
+      if(!response.ok)throw new Error('采集器暂不可用');
+      const data=await response.json(),cpu=data.cpu||{},hwinfo=cpu.temperatureSources?.hwinfo_csv;
+      options('adapter',(data.network?.availableAdapters||[]).map(item=>[item.name,item.name]),data.network?.adapter);
+      const source=cpu.temperatureSource||'hwinfo_csv';
+      if(document.activeElement!==$('source'))$('source').value=source;
+      $('csv-row').hidden=source!=='hwinfo_csv';$('awcc-row').hidden=source!=='alienware_wmi';
+      options('csv',(hwinfo?.availableSensors||[]).map(name=>[name,name]),hwinfo?.sensor);
+      options('awcc',(data.alienware?.sensors||[]).map(item=>[item.key,`${item.key} · ${item.valueC??'—'} °C`]),source==='alienware_wmi'?cpu.temperatureProvider?.sensorKey:null);
+      if(!$('message').dataset.saved)$('message').textContent=cpu.temperatureProvider?.message||'采集器正在预热';
+    }catch(error){$('message').textContent=error.message;}
+  }
+  async function save(value){
+    saving=true;
+    try{
+      const response=await fetch('/api/v1/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
+      const data=await response.json();
+      if(!response.ok)throw new Error(data.error||'配置未保存');
+      $('message').textContent='来源已保存；对应历史重新累计。';$('message').dataset.saved='true';
+    }catch(error){$('message').textContent=error.message;}
+    finally{saving=false;await refresh();}
+  }
+  $('adapter').addEventListener('change',event=>{if(event.target.value)save({adapter:event.target.value});});
+  $('source').addEventListener('change',event=>save({temperatureSource:event.target.value}));
+  $('csv').addEventListener('change',event=>{if(event.target.value)save({temperatureSensor:event.target.value});});
+  $('awcc').addEventListener('change',event=>{if(event.target.value)save({temperatureSource:'alienware_wmi',awccTemperatureSensor:event.target.value});});
+  refresh();setInterval(refresh,2000);
+</script>
+</html>

@@ -1,0 +1,219 @@
+{
+  "version": "0.1.0",
+  "sceneSize": [
+    3440,
+    1440
+  ],
+  "previewSize": [
+    860,
+    360
+  ],
+  "defaultVisibleWindows": 14,
+  "hiddenWindowNumbers": [
+    7,
+    8
+  ],
+  "floatStrength": 1.5,
+  "hardwarePollMs": 250,
+  "audioPollMs": 33,
+  "targetAnimationFps": 60,
+  "runtimeConfiguration": "generated during local setup",
+  "reviewStatus": "待用户人眼检验",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 178,
+      "sha256": "7cf95f6747e3092f1700c27a98b0e2ec70d27a93d47e7d59343c30cc673017b8"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 362,
+      "sha256": "990e5f829167a162e5b7a38b3ad6a6ea82c9022ed24102d81369d87b3bdac1de"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 835,
+      "sha256": "dacbaffdafb19d06fffb61ab52f073132485f7a66eb1dde4f0faa0a61cf7cc91"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5352,
+      "sha256": "bdf7a9112805fa9e771a5079fe0c58646e1191be1e932f57790d5d940746e444"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "bytes": 749,
+      "sha256": "3f8d04b518dc93708a0c45244f183325f3a4580012dd12a31cacecce817981a8"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 961,
+      "sha256": "f93060d7491a0cdc04c65652f4a0721733d5aef055ac39459e4af9a4431a1db9"
+    },
+    {
+      "path": "setup-telemetry.ps1",
+      "bytes": 1726,
+      "sha256": "188d7e565d2acf6ad3ab4104e7da336fcee6e61dce4b537b7c49ae1843f62ceb"
+    },
+    {
+      "path": "telemetry/audio-loopback.py",
+      "bytes": 8338,
+      "sha256": "12e456e59c9db4a5f129bb24f58acd4b8cac033fb21ce9a57aa10e1567a5e9c0"
+    },
+    {
+      "path": "telemetry/awcc-sensors.ps1",
+      "bytes": 11159,
+      "sha256": "c710e2ba92f423f7beb943bba051c17c58db8e3d97d424f40719dbb3768578df"
+    },
+    {
+      "path": "telemetry/collector.py",
+      "bytes": 26493,
+      "sha256": "ab03db30b1f2bfc876071db3ac27d38051df555e377df1f8fa74692eed5113bd"
+    },
+    {
+      "path": "telemetry/configure.html",
+      "bytes": 4134,
+      "sha256": "ecba82001d510e8cdcc226ef9b7fc6b40107d7feb764e73d4cb91140ccb8ee60"
+    },
+    {
+      "path": "telemetry/requirements.txt",
+      "bytes": 61,
+      "sha256": "4d9940ffbd5be243e59e76e443737c1f7304373b2757436b2733552161357ad5"
+    },
+    {
+      "path": "telemetry/runtime-host.py",
+      "bytes": 2894,
+      "sha256": "56f75242dd3439c9cf8914f71c67d1064acb6c4591ce14df0d616fccbac3a316"
+    },
+    {
+      "path": "telemetry/serve.py",
+      "bytes": 7304,
+      "sha256": "d3bdb8052c1dd3bcb9b0ae85905afe56bf8f2661e1b5f3802b8bd6340a0bc323"
+    },
+    {
+      "path": "telemetry/start-live.ps1",
+      "bytes": 410,
+      "sha256": "0dd5fb5eb5aea31ecc395a6d250f418c2f42a286a418624453698930084212b8"
+    },
+    {
+      "path": "telemetry/startup.py",
+      "bytes": 2217,
+      "sha256": "20136dd41281e269d1a95ce3841c5c6f1f9001788ba63b62982864b69d88c58b"
+    },
+    {
+      "path": "telemetry/user-settings.example.json",
+      "bytes": 121,
+      "sha256": "5d86a1a19714ca472050a6839e27f28389bbe98d1e2d7e45a7b013ce81d3814a"
+    },
+    {
+      "path": "wallpaper/assets-data.js",
+      "bytes": 342694,
+      "sha256": "f4ef3a398f36d0ce18bf36fe22ae4d0308451f678d387df7acf77cdc1578f65a"
+    },
+    {
+      "path": "wallpaper/assets/scene/observatory-SR-3440x1440.png",
+      "bytes": 5480484,
+      "sha256": "327a35ee9e7aa10ade40c1e9f3a925aef67e2ad02e5c0b7fb1aa0eb397e80fb6"
+    },
+    {
+      "path": "wallpaper/audio-live.js",
+      "bytes": 7746,
+      "sha256": "423c43a3589fa2ee5768e75c3e62996c236705d52cf777e2ca36c9b739249de0"
+    },
+    {
+      "path": "wallpaper/fonts.css",
+      "bytes": 423,
+      "sha256": "c2071f77cea696380aecb11759ffae1a3c0022a40c4955cc64f811c12e3211b0"
+    },
+    {
+      "path": "wallpaper/fonts/Oxanium.ttf",
+      "bytes": 43536,
+      "sha256": "2ce01d946e1e1ffc8d7eecfffbda8623bedd63eaf811a20488c4b69af45babb0"
+    },
+    {
+      "path": "wallpaper/fonts/Rajdhani-Medium.ttf",
+      "bytes": 384348,
+      "sha256": "12ff7dcfe4c206e3875ac53b1762eab57de6a2fa7f5a86c26b97b88d6591eac2"
+    },
+    {
+      "path": "wallpaper/fonts/Rajdhani-SemiBold.ttf",
+      "bytes": 390340,
+      "sha256": "94bbd25a18ca665999feb05a537de9fd2b860dcfb78bbe9ca00270825bf235da"
+    },
+    {
+      "path": "wallpaper/fonts/oxanium-OFL.txt",
+      "bytes": 4384,
+      "sha256": "fe17c0f2581d71b4e1ea7e636e7f4877c29223e11bb1dd1a871e8c3f2a86336b"
+    },
+    {
+      "path": "wallpaper/fonts/rajdhani-OFL.txt",
+      "bytes": 4373,
+      "sha256": "f62ef357d3a1c3d27edd35a6e1ba350e8a8d13499797964eeadefbf0b3b15d1f"
+    },
+    {
+      "path": "wallpaper/index.html",
+      "bytes": 6550,
+      "sha256": "a569514b81fdbcc379ca69aa1677a9077a4cf2c235e69526d3b54ac4a4a7cbc1"
+    },
+    {
+      "path": "wallpaper/live-data.css",
+      "bytes": 2442,
+      "sha256": "19c83540ebbfefaf5509df3fdd438f9a6b1f385dcc09badb7e3438ac110b3adb"
+    },
+    {
+      "path": "wallpaper/live-data.js",
+      "bytes": 20095,
+      "sha256": "dfc980d8d8c457b616b29fcde1d40c8a31f32af5d7017abc69bfc67909f008ee"
+    },
+    {
+      "path": "wallpaper/motion.js",
+      "bytes": 13122,
+      "sha256": "6f0aaf51d99142de73cfe8890fb0319b85ca2a140c6539cfd524337f2011e671"
+    },
+    {
+      "path": "wallpaper/preview.jpg",
+      "bytes": 108157,
+      "sha256": "077533712f5082e8ebf9485f79fc1c2851917d7d7c91641bcd5558b512deae6c"
+    },
+    {
+      "path": "wallpaper/project.json",
+      "bytes": 5678,
+      "sha256": "90cac356d8edd878a9782dc556dbc7009b37a172a381c9d4996c00f7b981b19a"
+    },
+    {
+      "path": "wallpaper/runtime.css",
+      "bytes": 4894,
+      "sha256": "d9c64f4e2eee2b267c7986194526aea81625d35224a82702935899386cc1ec95"
+    },
+    {
+      "path": "wallpaper/runtime.js",
+      "bytes": 4668,
+      "sha256": "6bc5211b54b3af8086a14cea1490bef0758129bd0f4fdc6bcd506472158ac256"
+    },
+    {
+      "path": "wallpaper/wallpaper-bridge.js",
+      "bytes": 1007,
+      "sha256": "97c608a15b38b73b668d0efae58eee5da4264f3b8b4b01cf9b6c596cd9e929f3"
+    },
+    {
+      "path": "wallpaper/wallpaper-settings.css",
+      "bytes": 89,
+      "sha256": "c1cf5df166e0ce342f95634fd58d14542b1d4c8704add05b7c65c35a28dc56f6"
+    },
+    {
+      "path": "wallpaper/wallpaper-settings.js",
+      "bytes": 4948,
+      "sha256": "7954d51c42c580e898aceed5acb3c3c27839a1265884ee85520fdb1b713860eb"
+    },
+    {
+      "path": "wallpaper/wallpaper-status.js",
+      "bytes": 760,
+      "sha256": "37aabe329cc0620dc01b6336e03841d760ad1126f1bd81e511911a285530068c"
+    },
+    {
+      "path": "wallpaper/wallpaper.css",
+      "bytes": 446,
+      "sha256": "f15b6b06e4251f35e26ddc5c910fdaee5567f3dd88085c4fdea1f599dd0f1e43"
+    }
+  ]
+}

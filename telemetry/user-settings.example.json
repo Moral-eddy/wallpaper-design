@@ -1,0 +1,6 @@
+{
+  "adapter": null,
+  "temperatureSensor": null,
+  "temperatureSource": "hwinfo_csv",
+  "awccTemperatureSensor": null
+}

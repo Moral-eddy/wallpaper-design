@@ -1,0 +1,157 @@
+"""Loopback-only telemetry with a fixed public configuration page."""
+from pathlib import Path
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlparse
+from datetime import datetime
+import argparse
+import hmac
+import json
+import os
+import sys
+from collector import Collector, INTERVAL
+
+ROOT = Path(__file__).resolve().parent
+(ROOT / 'records').mkdir(parents=True, exist_ok=True)
+configuration = {}
+if (ROOT / 'local-machine.json').is_file():
+    configuration = json.loads((ROOT / 'local-machine.json').read_text(encoding='utf-8'))
+parser = argparse.ArgumentParser(description='Wallpaper loopback telemetry')
+parser.add_argument('--port', type=int, default=64582)
+parser.add_argument('--sensor-log', type=Path,
+                    default=Path(configuration.get('sensorLogPath', ROOT / 'sensor-input/HWiNFO.csv')))
+args = parser.parse_args()
+collector = Collector(args.sensor_log, ROOT / 'user-settings.json')
+READ_PATHS = {'/api/v1/snapshot', '/api/v1/audio', '/api/v1/info'}
+FILE_ORIGINS = {'null', 'file://'}
+try:
+    READ_KEY = json.loads((ROOT / 'read-access.json').read_text(encoding='utf-8')).get('key', '')
+except (OSError, ValueError):
+    READ_KEY = ''
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, *_):
+        pass
+
+    def json_response(self, value, status=200):
+        self.respond(json.dumps(value, ensure_ascii=False, allow_nan=False,
+                                separators=(',', ':')).encode('utf-8'),
+                     'application/json; charset=utf-8', status)
+
+    def respond(self, data, content_type, status=200):
+        self.send_response(status)
+        self.send_header('Content-Type', content_type)
+        self.send_header('Cache-Control', 'no-store')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        origin = getattr(self, '_read_origin', None)
+        if origin is not None:
+            self.send_header('Access-Control-Allow-Origin', origin)
+            self.send_header('Vary', 'Origin')
+        self.send_header('Content-Length', str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def local_request(self):
+        expected = f'127.0.0.1:{self.server.server_port}'
+        if self.headers.get('Host') != expected:
+            self.json_response({'error': 'Only loopback requests are accepted'}, 403)
+            return False
+        origin = self.headers.get('Origin')
+        key = self.headers.get('X-Wallpaper-Read-Key')
+        if key is not None:
+            valid = (self.command == 'GET' and urlparse(self.path).path in READ_PATHS
+                     and origin in FILE_ORIGINS | {None, 'http://' + expected}
+                     and bool(READ_KEY) and key.isascii() and hmac.compare_digest(key, READ_KEY))
+            if not valid:
+                self.json_response({'error': 'Invalid wallpaper read request'}, 403)
+                return False
+            self._read_origin = origin if origin in FILE_ORIGINS else None
+            return True
+        if origin and origin != 'http://' + expected:
+            self.json_response({'error': 'Only same-origin configuration is accepted'}, 403)
+            return False
+        return True
+
+    def do_OPTIONS(self):
+        expected = f'127.0.0.1:{self.server.server_port}'
+        origin = self.headers.get('Origin')
+        headers = {value.strip().lower() for value in
+                   self.headers.get('Access-Control-Request-Headers', '').split(',') if value.strip()}
+        if (self.headers.get('Host') != expected or origin not in FILE_ORIGINS
+                or urlparse(self.path).path not in READ_PATHS
+                or self.headers.get('Access-Control-Request-Method') != 'GET'
+                or headers != {'x-wallpaper-read-key'} or not READ_KEY):
+            self.json_response({'error': 'Preflight request denied'}, 403)
+            return
+        self.send_response(204)
+        self.send_header('Access-Control-Allow-Origin', origin)
+        self.send_header('Access-Control-Allow-Methods', 'GET')
+        self.send_header('Access-Control-Allow-Headers', 'X-Wallpaper-Read-Key')
+        self.send_header('Access-Control-Max-Age', '600')
+        self.send_header('Vary', 'Origin')
+        self.send_header('Content-Length', '0')
+        self.end_headers()
+
+    def do_GET(self):
+        if not self.local_request():
+            return
+        path = urlparse(self.path).path
+        if path == '/api/v1/snapshot':
+            self.json_response(collector.read())
+        elif path == '/api/v1/audio':
+            self.json_response(collector.read_audio())
+        elif path == '/api/v1/info':
+            startup_path = ROOT / 'records/collector-startup.json'
+            startup = json.loads(startup_path.read_text(encoding='utf-8')) if startup_path.is_file() else {}
+            self.json_response({'schemaVersion': 1, 'sampleIntervalMs': round(INTERVAL * 1000),
+                'historySeconds': 60, 'sensorLogPath': args.sensor_log.name,
+                'startup': {'installed': bool(startup.get('installed'))},
+                'audio': {'endpoint': '/api/v1/audio', 'pollIntervalMs': 33,
+                          'sampleRateHz': 48000, 'fftSize': 4096, 'spectrumBins': 48}})
+        elif path in ('/', '/configure.html', '/index.html'):
+            self.respond((ROOT / 'configure.html').read_bytes(), 'text/html; charset=utf-8')
+        else:
+            self.json_response({'error': 'No such endpoint'}, 404)
+
+    def do_POST(self):
+        if not self.local_request():
+            return
+        if urlparse(self.path).path != '/api/v1/config':
+            self.json_response({'error': 'No such endpoint'}, 404)
+            return
+        if not self.headers.get('Content-Type', '').startswith('application/json'):
+            self.json_response({'error': 'JSON is required'}, 415)
+            return
+        try:
+            size = int(self.headers.get('Content-Length', '0'))
+            if not 0 < size <= 4096:
+                raise ValueError('Invalid request size')
+            value = json.loads(self.rfile.read(size))
+            if not isinstance(value, dict) or set(value) - {
+                'adapter', 'temperatureSensor', 'temperatureSource', 'awccTemperatureSensor'}:
+                raise ValueError('Invalid configuration fields')
+            self.json_response(collector.configure(value))
+        except (ValueError, UnicodeError) as exc:
+            self.json_response({'error': str(exc)}, 400)
+
+
+try:
+    server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
+except OSError as exc:
+    if getattr(exc, 'winerror', None) == 10048 or exc.errno == 10048:
+        print('Loopback port is occupied; no existing process was stopped.', flush=True)
+        sys.exit(3)
+    raise
+collector.start()
+(ROOT / 'records/current-server.json').write_text(json.dumps({
+    'startedAt': datetime.now().astimezone().isoformat(), 'port': server.server_port,
+    'processId': os.getpid(), 'sensorLogPath': str(args.sensor_log.resolve()),
+    'readKeyConfigured': bool(READ_KEY)}, ensure_ascii=False, indent=2), encoding='utf-8')
+print(f'Telemetry configuration: http://127.0.0.1:{server.server_port}/configure.html', flush=True)
+try:
+    server.serve_forever()
+except KeyboardInterrupt:
+    pass
+finally:
+    server.server_close()
+    collector.close()

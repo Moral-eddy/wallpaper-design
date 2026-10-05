@@ -1,0 +1,212 @@
+{
+  "title": "莫宁 · 星海观测室 0.1.0",
+  "file": "index.html",
+  "type": "web",
+  "preview": "preview.jpg",
+  "version": 0,
+  "description": "3440×1440 星海观测室 · 14窗 · 浮动与悬停 · 硬件及音频响应 · 原生属性可调",
+  "general": {
+    "properties": {
+      "floatenabled": {
+        "type": "bool",
+        "text": "悬浮窗 · 轻浮动",
+        "value": true,
+        "order": 1
+      },
+      "floatstrength": {
+        "type": "slider",
+        "text": "悬浮窗 · 浮动幅度（%）",
+        "value": 150,
+        "order": 2,
+        "min": 0,
+        "max": 250,
+        "step": 5,
+        "fraction": false,
+        "condition": "floatenabled.value==true"
+      },
+      "hoverenabled": {
+        "type": "bool",
+        "text": "悬浮窗 · 鼠标悬停高亮",
+        "value": true,
+        "order": 3
+      },
+      "windowbrightness": {
+        "type": "slider",
+        "text": "悬浮窗 · 亮度（%）",
+        "value": 100,
+        "order": 4,
+        "min": 30,
+        "max": 180,
+        "step": 1,
+        "fraction": false
+      },
+      "windowopacity": {
+        "type": "slider",
+        "text": "悬浮窗 · 不透明度（%）",
+        "value": 100,
+        "order": 5,
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "fraction": false
+      },
+      "audioenabled": {
+        "type": "bool",
+        "text": "音频 · 频谱与响应",
+        "value": true,
+        "order": 6
+      },
+      "audiogain": {
+        "type": "slider",
+        "text": "音频 · 灵敏度（%）",
+        "value": 100,
+        "order": 7,
+        "min": 25,
+        "max": 250,
+        "step": 5,
+        "fraction": false,
+        "condition": "audioenabled.value==true"
+      },
+      "refreshmode": {
+        "type": "combo",
+        "text": "性能 · 更新速度",
+        "value": "fast",
+        "order": 8,
+        "options": [
+          {
+            "label": "快速 · 250ms / 60fps",
+            "value": "fast"
+          },
+          {
+            "label": "均衡 · 500ms / 30fps",
+            "value": "balanced"
+          },
+          {
+            "label": "节能 · 1000ms / 20fps",
+            "value": "quiet"
+          }
+        ]
+      },
+      "fitmode": {
+        "type": "combo",
+        "text": "画面 · 适屏方式",
+        "value": "contain",
+        "order": 9,
+        "options": [
+          {
+            "label": "完整显示 · 等比居中",
+            "value": "contain"
+          },
+          {
+            "label": "铺满屏幕 · 可能裁边",
+            "value": "cover"
+          }
+        ]
+      },
+      "individualwindows": {
+        "type": "bool",
+        "text": "展开逐窗显示开关",
+        "value": false,
+        "order": 10
+      },
+      "showwindow01": {
+        "type": "bool",
+        "text": "显示 01 · 每逻辑处理器负载",
+        "value": true,
+        "order": 11,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow02": {
+        "type": "bool",
+        "text": "显示 02 · 可用内存 / 缓存",
+        "value": true,
+        "order": 12,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow03": {
+        "type": "bool",
+        "text": "显示 03 · 累计传输",
+        "value": true,
+        "order": 13,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow04": {
+        "type": "bool",
+        "text": "显示 04 · 左右相对能量（音频待接入）",
+        "value": true,
+        "order": 14,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow05": {
+        "type": "bool",
+        "text": "显示 05 · 低中高频相对能量（音频待接入）",
+        "value": true,
+        "order": 15,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow06": {
+        "type": "bool",
+        "text": "显示 06 · 内存趋势",
+        "value": true,
+        "order": 16,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow09": {
+        "type": "bool",
+        "text": "显示 09 · 显存",
+        "value": true,
+        "order": 17,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow10": {
+        "type": "bool",
+        "text": "显示 10 · 日期",
+        "value": true,
+        "order": 18,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow11": {
+        "type": "bool",
+        "text": "显示 11 · CPU 使用率 / 温度",
+        "value": true,
+        "order": 19,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow12": {
+        "type": "bool",
+        "text": "显示 12 · GPU 使用率 / 温度 / 功耗",
+        "value": true,
+        "order": 20,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow13": {
+        "type": "bool",
+        "text": "显示 13 · 物理内存",
+        "value": true,
+        "order": 21,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow14": {
+        "type": "bool",
+        "text": "显示 14 · 上下行网速",
+        "value": true,
+        "order": 22,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow15": {
+        "type": "bool",
+        "text": "显示 15 · 主频谱",
+        "value": true,
+        "order": 23,
+        "condition": "individualwindows.value==true"
+      },
+      "showwindow16": {
+        "type": "bool",
+        "text": "显示 16 · 数字时钟",
+        "value": true,
+        "order": 24,
+        "condition": "individualwindows.value==true"
+      }
+    }
+  }
+}
