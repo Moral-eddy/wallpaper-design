@@ -32,6 +32,4 @@
 
 适用于 Windows + Wallpaper Engine。GPU 读数使用 NVIDIA 驱动接口；CPU 温度需接入 HWiNFO CSV 或支持的 Alienware 传感器。可用字段取决于设备与数据源。
 
-本版人物与背景为静态场景，动态集中在悬浮窗和音频面板。07 / 08 趋势窗固定隐藏；实际帧率受 Wallpaper Engine 设置影响。
-
 [完整安装与来源配置](docs/INSTALL.md) · [更新记录](CHANGELOG.md) · [素材与字体许可](THIRD_PARTY_NOTICES.md)
