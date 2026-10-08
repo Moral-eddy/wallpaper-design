@@ -6,9 +6,9 @@
 
 [**下载 v0.1.1**](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.1/Mornye-Observatory-v0.1.1.zip) · [版本发布页](https://github.com/Moral-eddy/wallpaper-design/releases/tag/v0.1.1) · [安装指南](docs/INSTALL.md)
 
-![莫宁星海观测室：悬浮窗、悬停高亮与音频响应演示](docs/media/observatory-demo.gif)
+![莫宁星海观测室 v0.1.1：声痕、音乐响应、浮动与悬停演示](docs/media/observatory-demo-v0.1.1.gif)
 
-*保留的 v0.1.0 演示：8 秒循环，1032×432 / 15fps，读数与频谱为模拟数据。v0.1.1 已将主频谱改为声痕，以上动图不展示本次音频更新。壁纸交付尺寸为 3440×1440。*
+*v0.1.1 演示：8 秒循环，1032×432 / 15fps。读数与音频均为模拟输入，展示声痕从静音到音乐响应再回到水平线，以及浮动与悬停。壁纸交付尺寸为 3440×1440。*
 
 ## 这一版可以体验什么
 
