@@ -1,10 +1,10 @@
 {
-  "title": "莫宁 · 星海观测室 0.1.0",
+  "title": "莫宁 · 星海观测室 0.1.1",
   "file": "index.html",
   "type": "web",
   "preview": "preview.jpg",
   "version": 0,
-  "description": "3440×1440 星海观测室 · 14窗 · 浮动与悬停 · 硬件及音频响应 · 原生属性可调",
+  "description": "3440×1440 星海观测室 · 14窗 · 原生音频声痕 · 浮动与悬停 · 可选硬件读数",
   "general": {
     "properties": {
       "floatenabled": {
@@ -195,7 +195,7 @@
       },
       "showwindow15": {
         "type": "bool",
-        "text": "显示 15 · 主频谱",
+        "text": "显示 15 · 声痕主频道",
         "value": true,
         "order": 23,
         "condition": "individualwindows.value==true"
@@ -208,5 +208,6 @@
         "condition": "individualwindows.value==true"
       }
     }
-  }
+  },
+  "supportsaudioprocessing": true
 }

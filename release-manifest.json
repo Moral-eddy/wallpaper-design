@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "sceneSize": [
     3440,
     1440
@@ -15,35 +15,36 @@
   ],
   "floatStrength": 1.5,
   "hardwarePollMs": 250,
-  "audioPollMs": 33,
   "targetAnimationFps": 60,
+  "audioInput": "Wallpaper Engine native / 64 bins per channel",
+  "browserFallbackAudioPollMs": 33,
   "runtimeConfiguration": "generated during local setup",
   "reviewStatus": "待用户人眼检验",
   "files": [
     {
       "path": ".gitattributes",
-      "bytes": 178,
-      "sha256": "7cf95f6747e3092f1700c27a98b0e2ec70d27a93d47e7d59343c30cc673017b8"
+      "bytes": 189,
+      "sha256": "4fedba67f2754ee010fed11979c19b80082a18f20c180d00eabf2cb140b7b819"
     },
     {
       "path": ".gitignore",
-      "bytes": 362,
-      "sha256": "990e5f829167a162e5b7a38b3ad6a6ea82c9022ed24102d81369d87b3bdac1de"
+      "bytes": 382,
+      "sha256": "73170ad4bc37a7f6f0f340d69c0397e78d2a39ba3608167d72eb298cc2795462"
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 835,
-      "sha256": "dacbaffdafb19d06fffb61ab52f073132485f7a66eb1dde4f0faa0a61cf7cc91"
+      "bytes": 1784,
+      "sha256": "1878df89ce9e2dd2d02aaf218896ad931f9d87b128fb9a7891b23ca695859c68"
     },
     {
       "path": "README.md",
-      "bytes": 5352,
-      "sha256": "bdf7a9112805fa9e771a5079fe0c58646e1191be1e932f57790d5d940746e444"
+      "bytes": 2533,
+      "sha256": "1538563f187e28576d9c30ed76ab98d74d961f7288f1b337cbf006d17008f32d"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "bytes": 749,
-      "sha256": "3f8d04b518dc93708a0c45244f183325f3a4580012dd12a31cacecce817981a8"
+      "bytes": 970,
+      "sha256": "3375ddab580f0de3676020859a6407a56a054149cac390a9f7a38ecbbba2a59c"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -51,9 +52,19 @@
       "sha256": "f93060d7491a0cdc04c65652f4a0721733d5aef055ac39459e4af9a4431a1db9"
     },
     {
+      "path": "docs/INSTALL.md",
+      "bytes": 6734,
+      "sha256": "fd5c9403c642281d78780ef9fb64d0a35d067140f14d639ccb6c0973b6bcd4f9"
+    },
+    {
+      "path": "docs/media/observatory-demo.gif",
+      "bytes": 6172007,
+      "sha256": "8ad3c3453c3bec00a4ebbe1d61ca3cf8a57ae9a990015bf0fda659264686ea56"
+    },
+    {
       "path": "setup-telemetry.ps1",
-      "bytes": 1726,
-      "sha256": "188d7e565d2acf6ad3ab4104e7da336fcee6e61dce4b537b7c49ae1843f62ceb"
+      "bytes": 1752,
+      "sha256": "30fb7a81cbbf9e14af961910e279778f891004a11bb1d9d16980bde2c8afd635"
     },
     {
       "path": "telemetry/audio-loopback.py",
@@ -67,13 +78,18 @@
     },
     {
       "path": "telemetry/collector.py",
-      "bytes": 26493,
-      "sha256": "ab03db30b1f2bfc876071db3ac27d38051df555e377df1f8fa74692eed5113bd"
+      "bytes": 26039,
+      "sha256": "6c3b3bb95cb0f387081410e94eeb9b17c04bd818f6b4f45b6ce106e0723ae62c"
     },
     {
       "path": "telemetry/configure.html",
       "bytes": 4134,
       "sha256": "ecba82001d510e8cdcc226ef9b7fc6b40107d7feb764e73d4cb91140ccb8ee60"
+    },
+    {
+      "path": "telemetry/install-telemetry-task.ps1",
+      "bytes": 6421,
+      "sha256": "4102aeb2df83d75f04e2690e08ba85ba2c543b3a7488d49328e78d42362f8220"
     },
     {
       "path": "telemetry/requirements.txt",
@@ -82,23 +98,23 @@
     },
     {
       "path": "telemetry/runtime-host.py",
-      "bytes": 2894,
-      "sha256": "56f75242dd3439c9cf8914f71c67d1064acb6c4591ce14df0d616fccbac3a316"
+      "bytes": 8362,
+      "sha256": "124c947d22e3b605a8133650c5a22716fea9ec9ca83d6211b3680935d30eaa30"
     },
     {
       "path": "telemetry/serve.py",
-      "bytes": 7304,
-      "sha256": "d3bdb8052c1dd3bcb9b0ae85905afe56bf8f2661e1b5f3802b8bd6340a0bc323"
+      "bytes": 7589,
+      "sha256": "77d80c6955e1abd9787dd46ac4419c141f718b7d06075fe3285055327cbf40e9"
     },
     {
       "path": "telemetry/start-live.ps1",
-      "bytes": 410,
-      "sha256": "0dd5fb5eb5aea31ecc395a6d250f418c2f42a286a418624453698930084212b8"
+      "bytes": 418,
+      "sha256": "11c574b08150e1b1a9dabcdc7fe05bfa69dc87a19be70533c1e526fbaff8ded4"
     },
     {
       "path": "telemetry/startup.py",
-      "bytes": 2217,
-      "sha256": "20136dd41281e269d1a95ce3841c5c6f1f9001788ba63b62982864b69d88c58b"
+      "bytes": 1219,
+      "sha256": "50dc34c8bcd785d1f3752f73439426d0796831797b0f7bdf07c2605dcc2de33d"
     },
     {
       "path": "telemetry/user-settings.example.json",
@@ -117,8 +133,8 @@
     },
     {
       "path": "wallpaper/audio-live.js",
-      "bytes": 7746,
-      "sha256": "423c43a3589fa2ee5768e75c3e62996c236705d52cf777e2ca36c9b739249de0"
+      "bytes": 8529,
+      "sha256": "9c62ab6bc69293a5534e7277c9952215f46b1c0dc91ce2af90e9a89453aeef2f"
     },
     {
       "path": "wallpaper/fonts.css",
@@ -142,18 +158,18 @@
     },
     {
       "path": "wallpaper/fonts/oxanium-OFL.txt",
-      "bytes": 4384,
-      "sha256": "fe17c0f2581d71b4e1ea7e636e7f4877c29223e11bb1dd1a871e8c3f2a86336b"
+      "bytes": 4477,
+      "sha256": "520a09e6882633c90889fa75faf55ca93e6e62a5f98c7ffca3db832c1b3d4173"
     },
     {
       "path": "wallpaper/fonts/rajdhani-OFL.txt",
-      "bytes": 4373,
-      "sha256": "f62ef357d3a1c3d27edd35a6e1ba350e8a8d13499797964eeadefbf0b3b15d1f"
+      "bytes": 4466,
+      "sha256": "bb36ea0b5e02431f0372edde87b029ceb071806f5296c4ffb38756850a54e2ed"
     },
     {
       "path": "wallpaper/index.html",
-      "bytes": 6550,
-      "sha256": "a569514b81fdbcc379ca69aa1677a9077a4cf2c235e69526d3b54ac4a4a7cbc1"
+      "bytes": 6864,
+      "sha256": "8bb57d854725beb20d046f875404fed5b0bf4c2de7203989f8baae01fe83f469"
     },
     {
       "path": "wallpaper/live-data.css",
@@ -162,13 +178,13 @@
     },
     {
       "path": "wallpaper/live-data.js",
-      "bytes": 20095,
-      "sha256": "dfc980d8d8c457b616b29fcde1d40c8a31f32af5d7017abc69bfc67909f008ee"
+      "bytes": 19812,
+      "sha256": "f16b8ea4d69f7171951622661f5da762c60031e5013edfe0c6c3bbe7d3af3a6d"
     },
     {
       "path": "wallpaper/motion.js",
-      "bytes": 13122,
-      "sha256": "6f0aaf51d99142de73cfe8890fb0319b85ca2a140c6539cfd524337f2011e671"
+      "bytes": 12919,
+      "sha256": "1681a553aaec7877e241346c5f662b1a5cac1b87563f7bfa5ad65e0d919151e3"
     },
     {
       "path": "wallpaper/preview.jpg",
@@ -177,8 +193,8 @@
     },
     {
       "path": "wallpaper/project.json",
-      "bytes": 5678,
-      "sha256": "90cac356d8edd878a9782dc556dbc7009b37a172a381c9d4996c00f7b981b19a"
+      "bytes": 5716,
+      "sha256": "99be0dcda1710be00fc5ca12221341dd874e520e550e6a7b52596832fe134213"
     },
     {
       "path": "wallpaper/runtime.css",
@@ -191,19 +207,44 @@
       "sha256": "6bc5211b54b3af8086a14cea1490bef0758129bd0f4fdc6bcd506472158ac256"
     },
     {
+      "path": "wallpaper/tacet-envelope-data.js",
+      "bytes": 2269,
+      "sha256": "5de872804495283dbc79df9154a1b50690111389301b3728f0f237b4e3225f0e"
+    },
+    {
+      "path": "wallpaper/tacet-live.js",
+      "bytes": 4160,
+      "sha256": "c056d4c824c2f41223946d4ee5a111b2456ba4eaa203ed89f6db22c6805c5be4"
+    },
+    {
+      "path": "wallpaper/tacet-renderer.js",
+      "bytes": 9757,
+      "sha256": "fec8c9018d5c9143ad214280451659da8e7a49f777de3bec092d73ef14fa9802"
+    },
+    {
+      "path": "wallpaper/wallpaper-audio-input.js",
+      "bytes": 1962,
+      "sha256": "afc527b6f9a7db8daae995b070dd33ca250128ecc592df9a88d0d948add8a84b"
+    },
+    {
+      "path": "wallpaper/wallpaper-audio-levels.js",
+      "bytes": 2032,
+      "sha256": "9e54e9c54907ef264c989a4277606e72466757feeca89c4380fdb7c97a7fd716"
+    },
+    {
       "path": "wallpaper/wallpaper-bridge.js",
       "bytes": 1007,
       "sha256": "97c608a15b38b73b668d0efae58eee5da4264f3b8b4b01cf9b6c596cd9e929f3"
     },
     {
       "path": "wallpaper/wallpaper-settings.css",
-      "bytes": 89,
-      "sha256": "c1cf5df166e0ce342f95634fd58d14542b1d4c8704add05b7c65c35a28dc56f6"
+      "bytes": 88,
+      "sha256": "31cc079c0beb4045f2f6dddab343db078d0719e1c208c3d8ca6960eb418e3ea3"
     },
     {
       "path": "wallpaper/wallpaper-settings.js",
-      "bytes": 4948,
-      "sha256": "7954d51c42c580e898aceed5acb3c3c27839a1265884ee85520fdb1b713860eb"
+      "bytes": 4881,
+      "sha256": "8309f6f707e911c48c070bdc3fd34d052022c6e240932861250f8dae7fd35a91"
     },
     {
       "path": "wallpaper/wallpaper-status.js",

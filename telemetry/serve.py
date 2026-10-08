@@ -29,6 +29,13 @@ except (OSError, ValueError):
     READ_KEY = ''
 
 
+class LocalTelemetryServer(ThreadingHTTPServer):
+    def handle_error(self, request, client_address):
+        if isinstance(sys.exc_info()[1], (BrokenPipeError, ConnectionResetError, ConnectionAbortedError)):
+            return
+        super().handle_error(request, client_address)
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *_):
         pass
@@ -136,7 +143,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 try:
-    server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
+    server = LocalTelemetryServer(('127.0.0.1', args.port), Handler)
 except OSError as exc:
     if getattr(exc, 'winerror', None) == 10048 or exc.errno == 10048:
         print('Loopback port is occupied; no existing process was stopped.', flush=True)

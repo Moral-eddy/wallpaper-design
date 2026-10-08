@@ -1,7 +1,7 @@
 "use strict";
 (() => {
   const NS = 'http://www.w3.org/2000/svg', $ = id => document.getElementById(id);
-  const identifiers = ['spectrum', 'stereo', 'bands'];
+  const identifiers = ['stereo', 'bands'];
   const panes = new Map(identifiers.map(id => [id, document.querySelector(`.native-pane[data-window="${id}"]`)]));
   const energyFields = ['leftRelativeEnergy', 'rightRelativeEnergy', 'lowRelativeEnergy', 'midRelativeEnergy', 'highRelativeEnergy'];
   for (const item of window.SAMPLE_ASSETS.windows) {
@@ -13,7 +13,9 @@
     for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
     return node;
   };
-  const response = value => finite(value) ? Math.max(0, Math.min(1, value*(window.MORNYE_SETTINGS?.audioGain??1))) : 0;
+  const response = value => !finite(value) ? 0 : window.MORNYE_NATIVE_AUDIO?.mode==='native'
+    ? window.MORNYE_AUDIO_LEVELS.mapResponse(value,window.MORNYE_SETTINGS?.audioGain??1)
+    : Math.max(0,Math.min(1,value*(window.MORNYE_SETTINGS?.audioGain??1)));
   const bars = [], gauges = [], readouts = [], statuses = [];
   const display = {left: Array(48).fill(0), right: Array(48).fill(0), energy: Object.fromEntries(energyFields.map(field => [field, 0]))};
   let frame = null, connected = false, lastReply = 0, pollTimer = null, busy = false, previousTick = performance.now();
@@ -55,7 +57,15 @@
     }
   }
 
+  const nativeSource = window.MORNYE_NATIVE_AUDIO;
+  const usesNativeAudio = nativeSource?.mode === 'native';
+
   function fresh() {
+    if (usesNativeAudio) {
+      frame = nativeSource.frame;
+      connected = nativeSource.receivedAt > 0;
+      lastReply = nativeSource.receivedAt;
+    }
     return window.MORNYE_SETTINGS?.audioEnabled!==false && connected && frame?.timestampMs && Date.now() - frame.timestampMs <= 2000 && performance.now() - lastReply <= 2000;
   }
 
@@ -65,11 +75,11 @@
     const current = fresh() ? frame : null;
     const active = current && ['online', 'silent'].includes(current.status);
     const smooth = (old, target) => {
-      const milliseconds = target > old ? 35 : 220;
+      const milliseconds = target > old ? 18 : 140;
       const value = old + (target - old) * (1 - Math.exp(-elapsed / milliseconds));
       return value < .0001 ? 0 : value;
     };
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < bars.length; i++) {
       display.left[i] = smooth(display.left[i], active ? response(current.spectrumLeft?.[i]) : 0);
       display.right[i] = smooth(display.right[i], active ? response(current.spectrumRight?.[i]) : 0);
       for (let channel = 0; channel < 2; channel++) {
@@ -88,15 +98,15 @@
     for (const node of statuses) if (node && node.textContent !== label) node.textContent = label;
     const summary = window.MORNYE_SETTINGS?.audioEnabled===false ? '音频响应已关闭' : active ? current.status === 'silent' ? '系统播放已连接 · 当前静音' : '系统播放声音 · AUDIO LIVE' : current?.status === 'warming' ? '正在连接播放设备' : '音频等待连接 · AUDIO OFFLINE';
     if ($('audio-summary').textContent !== summary) $('audio-summary').textContent = summary;
-    const message = current?.message || (connected ? '音频数据已过期，正在重新连接' : '等待本机音频采集接口');
+    const message = current?.message || (usesNativeAudio ? nativeSource.error ? '官方音频监听注册失败：' + nativeSource.error : connected ? '官方音频回调暂停，等待恢复' : '等待 Wallpaper Engine 官方音频回调' : connected ? '音频数据已过期，正在重新连接' : '等待本机音频采集接口');
     if ($('audio-source-state').textContent !== message) $('audio-source-state').textContent = message;
-    const device = current?.device?.name || '等待 Windows 默认播放设备';
+    const device = current?.device?.name || (usesNativeAudio ? 'Wallpaper Engine 音频输入（接口不提供设备名称）' : '等待 Windows 默认播放设备');
     if ($('audio-device-name').textContent !== device) $('audio-device-name').textContent = device;
     requestAnimationFrame(animate);
   }
 
   async function pollAudio() {
-    if (busy || document.hidden || window.MORNYE_SETTINGS?.paused || window.MORNYE_SETTINGS?.audioEnabled===false) return;
+    if (usesNativeAudio || busy || document.hidden || window.MORNYE_SETTINGS?.paused || window.MORNYE_SETTINGS?.audioEnabled===false) return;
     busy = true;
     try {
       const result = await window.wallpaperFetch('/api/v1/audio', {cache: 'no-store', signal: AbortSignal.timeout(1500)});
@@ -104,6 +114,7 @@
       const next = await result.json();
       if (next.schemaVersion !== 1) throw new Error('音频接口版本不匹配');
       frame = next; connected = true; lastReply = performance.now();
+      window.MORNYE_BROWSER_AUDIO = {frame:next, receivedAt:lastReply};
     } catch (_) { connected = false; }
     finally {
       busy = false;
