@@ -1,39 +1,35 @@
 # 莫宁 · 星海观测室
 
-**Wallpaper Engine 动态壁纸 · v0.1.1 · 3440×1440**
+**Wallpaper Engine 动态壁纸 · v0.1.2 · 3440×1440**
 
 让莫宁陪你坐在星海之下。两侧悬浮面板显示电脑状态，声痕随音乐起伏，鼠标移入时窗口柔和停稳、提亮。
 
-[**下载 v0.1.1**](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.1/Mornye-Observatory-v0.1.1.zip) · [版本发布页](https://github.com/Moral-eddy/wallpaper-design/releases/tag/v0.1.1) · [安装指南](docs/INSTALL.md)
+[**创意工坊订阅**](https://steamcommunity.com/sharedfiles/filedetails/?id=3817553402) · [**下载采集器 EXE（Windows 64 位）**](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.2/Mornye-Telemetry-v0.1.2-win64.zip) · [完整发行包](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.2/Mornye-Observatory-v0.1.2.zip) · [安装指南](docs/INSTALL.md)
 
-![莫宁星海观测室 v0.1.1：声痕、音乐响应、浮动与悬停演示](docs/media/observatory-demo-v0.1.1.gif)
+![莫宁星海观测室：声痕、音乐响应、浮动与悬停演示](docs/media/observatory-demo-v0.1.1.gif)
 
-*v0.1.1 演示：8 秒循环，1032×432 / 15fps。读数与音频均为模拟输入，展示声痕从静音到音乐响应再回到水平线，以及浮动与悬停。壁纸交付尺寸为 3440×1440。*
+*壁纸画面演示：v0.1.1，8 秒循环，1032×432 / 15fps。读数与音频均为模拟输入；壁纸交付尺寸为 3440×1440。v0.1.2 的主要更新是采集器 EXE 和配置流程，沿用画面与音频动效。*
 
-## 这一版可以体验什么
+## 可以体验什么
 
 - **14 个悬浮面板**：CPU、GPU、内存、网络、时钟与音频信息围绕观测室排布。
 - **轻浮动与悬停高亮**：各窗错相浮动，移入后停稳阅读，移开后恢复。
-- **原生音乐响应**：433px 对称声痕、左右声道及低中高频响应使用 Wallpaper Engine 官方音频输入，无需额外音频采集器；静音时声痕回到水平线。
-- **随手调整**：在 Wallpaper Engine 属性面板中控制浮动幅度、亮度、透明度、音频灵敏度和逐窗显隐。
-- **三档更新速度**：快速、均衡、节能；可选择完整显示或铺满屏幕。
+- **原生音乐响应**：对称声痕、左右声道和低中高频响应使用 Wallpaper Engine 官方音频；静音时声痕回到水平线。
+- **可调属性**：浮动幅度、亮度、透明度、音频灵敏度、更新速度、适屏及逐窗显隐。
+- **独立采集器 EXE**：无需安装 Python；自动查找订阅目录，生成连接配置，提供实时硬件数据。
+- **Alienware 温度入口**：点击启用并确认管理员授权后，启动内置只读温度辅助采集；已有本项目的温度采集可以自动接入。
 
 ## 开始使用
 
-1. 下载并解压发行包。
-2. 在 Wallpaper Engine 编辑器中以 `wallpaper/index.html` 创建网页壁纸，保存并应用。
-3. 在“已安装”页面右侧调整壁纸属性。
+1. 在创意工坊订阅并应用壁纸。时间、日期、音乐与动效可以直接使用。
+2. 想看硬件读数时，下载采集器 ZIP，解压并双击 `Mornye-Telemetry.exe`。
+3. 确认实际订阅目录，点击“配置并启动”，然后重新加载壁纸。
+4. Alienware 设备需要温度时，点击“启用 Alienware 温度采集”，再在来源页按设备显示确认 CPU 编号。
 
-如果导入后没有可调属性，按[安装指南](docs/INSTALL.md#导入-wallpaper-engine)复制项目定义并重新打开。
+**音乐响应不需要采集器。** 硬件未连接或字段不支持时显示缺失。GPU 当前使用 NVIDIA 驱动接口；CPU 温度需要支持的 Alienware 接口，或持续更新的 HWiNFO CSV。
 
-**音乐响应可直接使用。** 在 Wallpaper Engine 中启用音频录制，并播放声音。
+程序数据保存在壁纸目录的 `telemetry-runtime` 子文件夹。保持 EXE 运行可持续采集，最小化不会退出；本版手动启动，不登记登录任务。Steam 更新若清理配置，需再次配置连接。
 
-**想看实时硬件读数？** 按[硬件采集器安装步骤](docs/INSTALL.md#启用硬件读数)完成配置。场景、时钟、浮动、悬停和原生音频可独立使用；采集器未连接时，硬件字段显示离线。
+也可下载完整包，以其中 `wallpaper/index.html` 手动导入网页壁纸，按[安装指南](docs/INSTALL.md)恢复原生属性。
 
-从 v0.1.0 升级见[升级说明](docs/INSTALL.md#从-v010-升级)。
-
-## 使用前了解
-
-适用于 Windows + Wallpaper Engine。GPU 读数使用 NVIDIA 驱动接口；CPU 温度需接入 HWiNFO CSV 或支持的 Alienware 传感器。可用字段取决于设备与数据源。
-
-[完整安装与来源配置](docs/INSTALL.md) · [更新记录](CHANGELOG.md) · [素材与字体许可](THIRD_PARTY_NOTICES.md)
+[完整安装指南](docs/INSTALL.md) · [版本记录](CHANGELOG.md) · [采集器源码与构建](companion/README.md) · [素材与依赖许可](THIRD_PARTY_NOTICES.md)

@@ -1,25 +1,14 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "sceneSize": [
     3440,
     1440
   ],
-  "previewSize": [
-    860,
-    360
-  ],
-  "defaultVisibleWindows": 14,
-  "hiddenWindowNumbers": [
-    7,
-    8
-  ],
-  "floatStrength": 1.5,
-  "hardwarePollMs": 250,
-  "targetAnimationFps": 60,
-  "audioInput": "Wallpaper Engine native / 64 bins per channel",
-  "browserFallbackAudioPollMs": 33,
-  "runtimeConfiguration": "generated during local setup",
-  "reviewStatus": "待用户人眼检验",
+  "companion": "collector/Mornye-Telemetry.exe",
+  "companionVersion": "0.1.2",
+  "runtimeDataDirectory": "selected wallpaper/telemetry-runtime",
+  "nativeAudio": true,
+  "userTrialFeedback": "当前候选5本机试用获用户确认；不扩充为其他设备验收",
   "files": [
     {
       "path": ".gitattributes",
@@ -28,33 +17,118 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 382,
-      "sha256": "73170ad4bc37a7f6f0f340d69c0397e78d2a39ba3608167d72eb298cc2795462"
+      "bytes": 540,
+      "sha256": "5973fe998bb79f137a3306e60e3ef0aa7f2733211e83a165cde2df3466e63a03"
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 1784,
-      "sha256": "1878df89ce9e2dd2d02aaf218896ad931f9d87b128fb9a7891b23ca695859c68"
+      "bytes": 2793,
+      "sha256": "96e4f4ded86879497edd43ac5c6ffc9d28520b4c90dbd7bd5b6eddadff43b3ee"
     },
     {
       "path": "README.md",
-      "bytes": 2533,
-      "sha256": "1538563f187e28576d9c30ed76ab98d74d961f7288f1b337cbf006d17008f32d"
+      "bytes": 2937,
+      "sha256": "a9e1269d4e124980951c1367962d017d6591e5dda205a3f39dbd820ad720c44e"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "bytes": 970,
-      "sha256": "3375ddab580f0de3676020859a6407a56a054149cac390a9f7a38ecbbba2a59c"
+      "bytes": 1044,
+      "sha256": "f7d92e2ce57a25e0694da3e4f5cb43c0bc251d80b9938e41a18356302997bd86"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 961,
-      "sha256": "f93060d7491a0cdc04c65652f4a0721733d5aef055ac39459e4af9a4431a1db9"
+      "bytes": 1394,
+      "sha256": "ce358e6d01af2668067e86117a8bcf89aba1175f89a535287add401f138c0200"
+    },
+    {
+      "path": "companion/README.md",
+      "bytes": 1403,
+      "sha256": "d7eecdaf4c8dce23f8a92e61b24ee4c953300d70a2fe83ceda577dadeb110aed"
+    },
+    {
+      "path": "companion/Tcl-license.terms",
+      "bytes": 2255,
+      "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+    },
+    {
+      "path": "companion/build-requirements.txt",
+      "bytes": 160,
+      "sha256": "9dde3b746b56f33fef123e7890fccd6a9e13fada8b5bc0817cb8ee8201f61a33"
+    },
+    {
+      "path": "companion/build.ps1",
+      "bytes": 820,
+      "sha256": "dabe0ab400eac2e0fe536d52f2eeecc02111b29839e249416f1ce1f7f345a851"
+    },
+    {
+      "path": "companion/collector.py",
+      "bytes": 26562,
+      "sha256": "6a4e0dac5b745a78dcf1492c89abb8fd50d9d949431b4bb59349cedf95af22f8"
+    },
+    {
+      "path": "companion/companion_core.py",
+      "bytes": 12823,
+      "sha256": "dfe7acb39fbbc9ee694b41874998e4ff73075ff7fe58d3e05633881593943826"
+    },
+    {
+      "path": "companion/configure.html",
+      "bytes": 4666,
+      "sha256": "18120a4c833bac501464ecf923104fc0a89912b43286ef526db1287abe8c54f5"
+    },
+    {
+      "path": "companion/disabled_audio.py",
+      "bytes": 359,
+      "sha256": "262a397bd9081e207bbe0b7431f17318ae8edeb780e72fd353a7957a6acf565e"
+    },
+    {
+      "path": "companion/launcher.py",
+      "bytes": 10285,
+      "sha256": "4a52291849d6d1c0cfe957fad177caed3016c0608d258a020ed763cb49077d93"
+    },
+    {
+      "path": "companion/managed-awcc.ps1",
+      "bytes": 12459,
+      "sha256": "539a4754e6764d8f82e7cf9d0d952457efdf9ca2776d4453d48bee61eee70f7b"
+    },
+    {
+      "path": "companion/managed_sensors.py",
+      "bytes": 6504,
+      "sha256": "608fb286c9b7d6958bc66bfd582e6a6eb46ad84dada7eb71bfa5d1ca2382f016"
+    },
+    {
+      "path": "companion/portable_server.py",
+      "bytes": 6936,
+      "sha256": "f4b812d399ef21922b987f01c8704ac147a6aafbe273b2a672de8850898296c7"
+    },
+    {
+      "path": "companion/tests/test-source-page.cjs",
+      "bytes": 2982,
+      "sha256": "e53981d72a24e1f6960f3d1e838152a4d0a13b0704d8f3131b938d5dc943de81"
+    },
+    {
+      "path": "companion/tests/test_companion.py",
+      "bytes": 13716,
+      "sha256": "8df5c436b89702078fe0048ae9cb4118673531edd3420ddf091b2c1936694238"
+    },
+    {
+      "path": "companion/worker_integrity.py",
+      "bytes": 92,
+      "sha256": "0bf970d555a56609e6b516cc6f93e54b74264385bcfec52010c039d9a0025306"
     },
     {
       "path": "docs/INSTALL.md",
-      "bytes": 6734,
-      "sha256": "fd5c9403c642281d78780ef9fb64d0a35d067140f14d639ccb6c0973b6bcd4f9"
+      "bytes": 4511,
+      "sha256": "bfdc4963aa01697d393ec0da9ec735edb1ff77f9f042b0d5a87e89ed9801e963"
+    },
+    {
+      "path": "docs/WORKSHOP_TUTORIAL.txt",
+      "bytes": 2369,
+      "sha256": "3fd302a835a5c016ad1af0220374a06da6b8f3837ac524a5deaddc689b71f9cc"
+    },
+    {
+      "path": "docs/media/observatory-demo-v0.1.1.gif",
+      "bytes": 6093096,
+      "sha256": "aaa89dbd2bbfa0ad60bcc2874b7dfebc773c86950ea4f376f62c458269b6c221"
     },
     {
       "path": "docs/media/observatory-demo.gif",
@@ -88,8 +162,8 @@
     },
     {
       "path": "telemetry/install-telemetry-task.ps1",
-      "bytes": 6421,
-      "sha256": "4102aeb2df83d75f04e2690e08ba85ba2c543b3a7488d49328e78d42362f8220"
+      "bytes": 6528,
+      "sha256": "018df438a5d06805724ef521b946d0248dbeaadc71cc48d3ce026f227b615102"
     },
     {
       "path": "telemetry/requirements.txt",
@@ -133,8 +207,8 @@
     },
     {
       "path": "wallpaper/audio-live.js",
-      "bytes": 8529,
-      "sha256": "9c62ab6bc69293a5534e7277c9952215f46b1c0dc91ce2af90e9a89453aeef2f"
+      "bytes": 8407,
+      "sha256": "ae65e887bd3dfdc9535ab5e6d00e6c5b0e55feee6d8d875f904ebf5b3a8d540d"
     },
     {
       "path": "wallpaper/fonts.css",
@@ -168,8 +242,8 @@
     },
     {
       "path": "wallpaper/index.html",
-      "bytes": 6864,
-      "sha256": "8bb57d854725beb20d046f875404fed5b0bf4c2de7203989f8baae01fe83f469"
+      "bytes": 6881,
+      "sha256": "d4e26c40864c9383b35b7fce542bf7c3b714f0e90a4b3c48ecb5cb789f19f3ea"
     },
     {
       "path": "wallpaper/live-data.css",
@@ -193,8 +267,8 @@
     },
     {
       "path": "wallpaper/project.json",
-      "bytes": 5716,
-      "sha256": "99be0dcda1710be00fc5ca12221341dd874e520e550e6a7b52596832fe134213"
+      "bytes": 5929,
+      "sha256": "fe5edb7d6995984a876e30043b85c3be6d72b0a3945e2e41de5774ee75d1ee34"
     },
     {
       "path": "wallpaper/runtime.css",
@@ -213,8 +287,8 @@
     },
     {
       "path": "wallpaper/tacet-live.js",
-      "bytes": 4160,
-      "sha256": "c056d4c824c2f41223946d4ee5a111b2456ba4eaa203ed89f6db22c6805c5be4"
+      "bytes": 4159,
+      "sha256": "ccba5a117b5fa5d1198772dc77d1d29e2fbb146a4dbcde46bd0817749a19599c"
     },
     {
       "path": "wallpaper/tacet-renderer.js",
@@ -256,5 +330,9 @@
       "bytes": 446,
       "sha256": "f15b6b06e4251f35e26ddc5c910fdaee5567f3dd88085c4fdea1f599dd0f1e43"
     }
-  ]
+  ],
+  "companionExe": {
+    "bytes": 12765031,
+    "sha256": "4d013d55f5a67d31a2f23880737f7476208bbafeaaadcb1e4e04890062ef16fe"
+  }
 }

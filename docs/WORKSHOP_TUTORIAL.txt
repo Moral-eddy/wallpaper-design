@@ -1,0 +1,26 @@
+[h1]硬件监控配置（v0.1.2 EXE）[/h1]
+
+订阅并应用壁纸后，时间、日期、音乐与动效可直接使用。CPU、GPU、内存、网络和温度是可选硬件监控功能。
+
+[h2]1. 下载与运行[/h2]
+从[url=https://github.com/Moral-eddy/wallpaper-design/releases/tag/v0.1.2]GitHub v0.1.2发布页[/url]下载 Mornye-Telemetry-v0.1.2-win64.zip，先解压，再双击 Mornye-Telemetry.exe，普通权限运行。不需要安装Python。
+
+[h2]2. 配置壁纸目录[/h2]
+程序会自动查找作品3817553402。未找到时，在Wallpaper Engine“已安装”页右键本作品→“在资源管理器中打开”，使用EXE的“选择目录”指定包含project.json和index.html的实际订阅文件夹。
+点击“配置并启动”，再切换到另一张壁纸并切回来，重新加载连接配置。
+订阅用户无需再次导入源码或替换project.json。
+
+[h2]3. 选择数据来源[/h2]
+“打开来源设置”可选择网卡，所有选择自动保存，没有“下一步”。
+Alienware设备点击“启用 Alienware 温度采集”。有现成采集时自动接入；否则确认Windows管理员授权后，内置读取器自动启动并接入数据，不需要自己找导出文件。在来源页按实际设备显示确认CPU传感器编号，程序不猜测归属。
+HWiNFO用户仍需开启持续CSV日志，再在EXE里选择日志和实际CPU Package温度列。
+
+[h2]运行与重开[/h2]
+保持EXE运行可持续采集，最小化不会退出。关闭程序会停止本程序采集，并请求结束本次启动的温度辅助进程；已有外部任务不受影响。本版不登记登录任务。重开后确认目录并配置，需要Alienware温度时再次点击启用。
+数据保存在所选壁纸目录的telemetry-runtime子文件夹，连接文件为telemetry-config.local.js，不要上传或分享这些文件。
+
+[h2]设备范围[/h2]
+GPU目前使用NVIDIA接口，缺失字段不代表整个连接失败。CPU温度需要支持的Alienware接口或持续HWiNFO日志。音乐使用Wallpaper Engine原生音频，不需要采集器。
+Steam更新若清理连接配置，请再次配置并重载壁纸。
+
+[url=https://github.com/Moral-eddy/wallpaper-design/blob/main/docs/INSTALL.md]完整安装指南[/url] · [url=https://github.com/Moral-eddy/wallpaper-design]项目源码[/url]

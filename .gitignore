@@ -18,3 +18,11 @@ wallpaper/telemetry-config.local.js
 Thumbs.db
 .idea/
 .vscode/
+
+# Standalone companion builds and per-wallpaper private runtime.
+companion/.build-env/
+companion/build/
+companion/dist/
+**/telemetry-runtime/
+**/telemetry-config.local.js
+*.exe

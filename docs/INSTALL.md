@@ -1,93 +1,53 @@
-# 安装指南
+# 安装与使用 v0.1.2
 
-## 导入 Wallpaper Engine
+## 创意工坊订阅用户
 
-1. 下载 Release 中的 `Mornye-Observatory-v0.1.1.zip` 并解压，或下载仓库源码。
-2. 在 Wallpaper Engine 编辑器中以 `wallpaper/index.html` 创建网页壁纸。
-3. 如果编辑器重建了项目定义，关闭该项目编辑器，将包内 `wallpaper/project.json` 复制到新项目目录，再重新打开、保存和应用。
-4. 在“已安装”页面选中壁纸，使用右侧属性面板调整设置。
+1. [订阅作品](https://steamcommunity.com/sharedfiles/filedetails/?id=3817553402)，等待下载完成，在 Wallpaper Engine 的“已安装”页面应用。
+2. 音乐使用 Wallpaper Engine 原生音频。请开启音频录制与壁纸属性中的音频响应；它不依赖采集器。
+3. 硬件监控为可选功能。下载 [Mornye-Telemetry-v0.1.2-win64.zip](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.2/Mornye-Telemetry-v0.1.2-win64.zip)，先解压，再双击 `Mornye-Telemetry.exe`，普通权限运行，无需 Python。
+4. 程序自动查找作品3817553402。若未找到，在 Wallpaper Engine 中右键作品 →“在资源管理器中打开”，通过“选择目录”指定包含 `project.json`、`index.html` 的实际订阅下载文件夹。
+5. 点击“配置并启动”。切换到另一张壁纸再切回来，重新加载连接配置。
+6. 点击“打开来源设置”选择使用中的网卡。页面的选择会自动保存，没有“下一步”。
 
-也可将 `wallpaper` 的内容复制到自己创建的本地网页项目目录。基础场景、时钟、浮动和悬停可以独立运行。Wallpaper Engine 内的音乐响应使用官方音频输入，无需额外采集器；硬件读数需要下方的可选采集器，没有连接时显示 `—` 或离线状态。
+实际订阅目录通常位于 `steamapps/workshop/content/431960/3817553402`。请使用正在应用的下载副本；订阅用户无需再次导入源码或替换 `project.json`。
 
-## 壁纸属性
+## 温度
 
-| 设置 | 默认值 / 范围 |
-| --- | --- |
-| 轻浮动 | 开启；幅度 150%，可调 0–250% |
-| 鼠标悬停高亮 | 开启 |
-| 窗口亮度 | 100%，可调 30–180% |
-| 窗口不透明度 | 100%，可调 10–100% |
-| 音频频谱与响应 | 开启；灵敏度 100%，可调 25–250% |
-| 更新档位 | 快速 250ms / 60fps；均衡 500ms / 30fps；节能 1000ms / 20fps |
-| 适屏方式 | 完整显示，或铺满屏幕并裁边 |
-| 各窗口显隐 | 展开逐窗选项后可独立控制 14 窗 |
+### Alienware
 
-07 CPU 趋势窗与 08 GPU 趋势窗固定隐藏。更新档位调整页面请求间隔与动画上限；采集器硬件周期为 250ms。实际帧率也受 Wallpaper Engine 总帧率设置影响。
+1. 在 EXE 中点击“启用 Alienware 温度采集”。
+2. 若检测到本项目已登记或已选择的新鲜温度采集，会自动只读接入；否则 Windows 会请求管理员授权，确认后启动内置辅助读取器。
+3. 等传感器列表出现，打开来源设置，按设备实际显示确认 CPU 编号。程序不会根据数值猜测 CPU/GPU 归属。
 
-## 启用原生音乐响应
+辅助读取器只调用原有温度/风扇读取接口，不修改风扇、功耗、超频或固件设置。设备需提供支持的 AWCC WMI 接口；不支持或未返回字段时显示缺失。
 
-在 Wallpaper Engine 设置中启用音频录制，并保持壁纸属性“音频频谱与响应”开启。播放声音后，由官方音频回调驱动声痕、左右声道和三频段显示。
+“选择 Alienware 导出”保留为高级入口，适用于已有持续更新 JSON 的用户；新用户通常不需要找文件。
 
-原生接口提供左右各64个频段；低/中/高按0–15、16–39、40–63分组。数字采用0–1视觉响应，不代表PCM、dB或精确Hz。15号声痕居中433px，静音时收为水平线，两侧显示PEAK BIN与CENTROID频段索引分析。
+### HWiNFO
 
-## 启用硬件读数
+在 HWiNFO 中开启持续 CSV 日志，回到 EXE 点击“选择 HWiNFO 日志”，再在来源页选择实际的 CPU Package 摄氏温度列。CSV 停止更新后会显示过期。CPU 温度没有连接，不等于 CPU 使用率、内存或网络连接失败。
 
-需要 Windows 和 Python。依赖按 `telemetry/requirements.txt` 安装。NVIDIA GPU 字段通过 NVML 读取；未支持的字段显示缺失。CPU 温度可使用 HWiNFO CSV 日志，或可选的 Alienware 固件读取器。
+## 保存、重开与退出
 
-在解压目录打开 PowerShell：
+- 本程序配置、读取密钥、日志、备份和自建温度导出位于所选壁纸目录的 `telemetry-runtime` 子文件夹；连接文件 `telemetry-config.local.js` 位于壁纸目录。不要上传或分享这些文件。
+- 服务只监听 `127.0.0.1`。通常用64582，冲突时尝试64583–64592，并把实际端口写入壁纸连接配置；不结束其他端口占用者。
+- 保持程序运行即可提供数据。最小化继续采集；“退出”或关闭窗口停止本程序采集，并请求停止本次启动的温度辅助进程。已有外部温度任务不会被停止。
+- 重新打开 EXE 后确认目录，点击“配置并启动”；需要温度时再次点击启用。只读复用的外部文件保持原位置，不会移动旧任务。
+- 本版不登记登录自启动。普通日志按2MiB轮换并保留上一份。主程序异常退出时，温度辅助进程通过心跳租约结束，可能受正在执行的 WMI 调用耗时影响。
+- Steam 更新或取消订阅可能清理下载目录里的本地文件；连接丢失时重新配置。不同设备与更新后的保留情况仍需实际验证。
 
-```powershell
-python -m venv telemetry/.venv
-./telemetry/.venv/Scripts/python.exe -m pip install -r telemetry/requirements.txt
-./setup-telemetry.ps1
-./telemetry/start-live.ps1
-```
+## 手动导入完整发行包
 
-如果壁纸已被导入其他目录，在启动前用实际的项目目录生成配置：
+下载并解压 `Mornye-Observatory-v0.1.2.zip`，以 `wallpaper/index.html` 创建网页壁纸。若编辑器重建项目定义，关闭项目，将包内 `wallpaper/project.json` 复制到导入目录，再重开、保存和应用。
 
-```powershell
-$wallpaperDirectory = Read-Host '请输入你的 Wallpaper Engine 网页项目目录'
-./setup-telemetry.ps1 -WallpaperDirectory $wallpaperDirectory
-```
+硬件采集时，EXE 的目录要选择导入后的实际项目文件夹。完整包中的 `collector/Mornye-Telemetry.exe` 与单独下载包相同。
 
-配置脚本为本次安装生成随机读取密钥，写入 `telemetry/read-access.json` 和目标壁纸目录的 `telemetry-config.local.js`。这些文件不随版本发布，也被 Git 忽略。重新生成或迁移配置后，重新打开壁纸项目。
+已有创意工坊发布项目更新时，要保留其 `workshopid` 和自定义设置。订阅者不需要操作这一项。
 
-采集器仅监听通用回环地址 `127.0.0.1:64582`。每次安装会读取使用者当前设备的数据；仓库不附带个人硬件清单、实时读数、网卡选择、设备标识或传感器映射。若端口已被另一实例占用，关闭那个实例后再启动本版采集器。
+## 从旧候选或 v0.1.1 升级
 
-采集器运行时，在浏览器打开 [采集配置页](http://127.0.0.1:64582/configure.html)，选择网卡、CPU 温度来源和传感器。HWiNFO 日志默认位置是 `telemetry/sensor-input/HWiNFO.csv`；也可在运行 `setup-telemetry.ps1` 时传入 `-SensorLog`，指定自己正在持续写入的 CSV。温度来源停止更新后显示过期状态。
+退出旧的 EXE 后运行新版，选定实际壁纸目录并重新配置。本版默认数据位置改为壁纸目录的 `telemetry-runtime`；不会自动搬动旧的本机生产任务或其文件。已有其他采集器可以继续运行，新版会避让端口。
 
-浏览器预览的备用音频使用 Windows 默认播放设备的 WASAPI 回环。Wallpaper Engine 中使用原生输入，不请求采集器音频接口；可选采集器仍包含浏览器备用音频依赖。
+候选5本机试用已获用户确认，但未覆盖所有Windows/Alienware设备。EXE为Windows64位，当前未签名。
 
-如需登录启动和进程中断后的自动恢复，可主动登记当前用户、普通权限的 Windows 计划任务：
-
-```powershell
-./telemetry/.venv/Scripts/python.exe telemetry/startup.py install
-```
-
-移除时将 `install` 改为 `uninstall`。只执行配置脚本不会登记任务；执行 `startup.py install` 会登记并启动任务。登录后延迟15秒启动，每分钟补启动，已有实例继续运行；任务不设运行时限，在电池供电时继续运行。守护进程在子进程退出后重试；端口占用时等待30秒，不结束端口占用者。
-
-普通日志每个文件达到2MiB前轮换，保留当前与上一份，host与采集器合计预算8MiB。致命错误日志在host启动时按128KiB阈值轮换，单次崩溃转储可能超出该阈值；状态JSON覆盖写入。
-
-## 可选 Alienware 温度与风扇
-
-`telemetry/awcc-sensors.ps1` 适用于提供 AWCC WMI 接口的设备。它按设备实际枚举的编号读取温度及转速，不预设 CPU / GPU 对应关系。可在管理员 PowerShell 中，从本项目目录运行：
-
-```powershell
-$sensorOutput = Join-Path (Get-Location).Path 'telemetry/sensor-input/alienware-live.json'
-./telemetry/awcc-sensors.ps1 -OutputPath $sensorOutput
-```
-
-如果 HWiNFO CSV 设在其他目录，请将导出文件放到该 CSV 的同一目录并命名为 `alienware-live.json`。之后在采集配置页按实际设备显示选择 CPU 温度编号。该读取器约每 2 秒更新；本版未附带管理员计划任务安装器。
-
-
-[返回发布首页](../README.md)
-
-## 从 v0.1.0 升级
-
-- 先保存旧目录和壁纸属性。在已导入的网页项目中更新v0.1.1壁纸文件；旧版已有的`telemetry-config.local.js`由使用者保留，发行包不提供这个文件。
-- v0.1.1的`project.json`包含原生音频声明和默认属性。若已有创意工坊项目，保留其已有`workshopid`及需要的自定义设置；更新后重新打开编辑器、保存并应用。尺寸、窗口布局和属性键沿用v0.1.0。
-- 音乐响应无需迁移采集器。若升级硬件采集器，先结束自己启动的旧采集器；同目录替换`runtime-host.py`、`startup.py`、`serve.py`并加入`install-telemetry-task.ps1`。保留`read-access.json`、`local-machine.json`、`user-settings.json`和`sensor-input`。
-- 若安装目录改变，先在旧目录执行`startup.py uninstall`，再为新壁纸目录运行`setup-telemetry.ps1 -WallpaperDirectory`，最后按需登记新任务。若Python环境改变，先用旧环境移除旧登录启动项，再用新环境登记。
-- 新任务登记仅迁移与当前目录及Python环境完全一致的旧登录项；遇到其他安装的同名登录项会停止，避免覆盖其他安装。
-
-新版真实音频、属性保存、硬件读数、任务恢复和日志轮换均待使用者人眼检验。
+[返回首页](../README.md) · [开发构建与旧Python路径](../companion/README.md)

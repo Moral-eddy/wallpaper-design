@@ -9,3 +9,8 @@ Oxanium 和 Rajdhani 字体采用 SIL Open Font License；对应许可原文保�
 可选采集器依赖 psutil、NumPy、CFFI 和 SoundCard。它们由使用者根据 `telemetry/requirements.txt` 安装，适用各依赖自己的许可证；发行包不包含从制作机器复制的 Python 安装、第三方安装目录或编译缓存。
 
 Wallpaper Engine、HWiNFO、Alienware Command Center、NVIDIA 驱动和 Python 由使用者另行安装；本仓库不包含这些软件本体。
+
+## v0.1.2 独立EXE
+
+独立采集器内含CPython3.12、Tcl/Tk及psutil5.9.8，使用PyInstaller6.22构建；对应许可与PyInstaller分发例外随EXE下载包附带。可执行程序不包含制作机器的安装目录、运行配置、读取密钥或传感器数据。
+Windows PowerShell由操作系统提供；EXE内嵌本项目只读AWCC采集脚本。NVIDIA驱动、HWiNFO和Alienware相关软件由使用者自行提供。
