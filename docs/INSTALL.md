@@ -1,10 +1,16 @@
-# 安装与使用 v0.1.2
+# 安装与使用 v0.1.3
+
+GitHub 完整包提供 v0.1.3 鼠标视差；创意工坊仍以实际下载内容为准，GitHub 发布不会自动更新订阅。采集器沿用 v0.1.2。
+
+## 鼠标视差
+
+默认开启，强度100%、缓动240毫秒、移开回正。属性面板提供四项设置：开关、强度0–200%、缓动100–800毫秒、移开回正。场景整图最大约10×5像素，远/中/近悬浮窗额外约4×2 / 8×4 / 12×6像素；默认整体放大约0.97%留边。关闭或强度0回到原构图。系统减少动态设置会关闭视差。
 
 ## 创意工坊订阅用户
 
 1. [订阅作品](https://steamcommunity.com/sharedfiles/filedetails/?id=3817553402)，等待下载完成，在 Wallpaper Engine 的“已安装”页面应用。
 2. 音乐使用 Wallpaper Engine 原生音频。请开启音频录制与壁纸属性中的音频响应；它不依赖采集器。
-3. 硬件监控为可选功能。下载 [Mornye-Telemetry-v0.1.2-win64.zip](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.2/Mornye-Telemetry-v0.1.2-win64.zip)，先解压，再双击 `Mornye-Telemetry.exe`，普通权限运行，无需 Python。
+3. 硬件监控为可选功能。下载 [Mornye-Telemetry-v0.1.2-win64.zip](https://github.com/Moral-eddy/wallpaper-design/releases/download/v0.1.3/Mornye-Telemetry-v0.1.2-win64.zip)，先解压，再双击 `Mornye-Telemetry.exe`，普通权限运行，无需 Python。
 4. 程序自动查找作品3817553402。若未找到，在 Wallpaper Engine 中右键作品 →“在资源管理器中打开”，通过“选择目录”指定包含 `project.json`、`index.html` 的实际订阅下载文件夹。
 5. 点击“配置并启动”。切换到另一张壁纸再切回来，重新加载连接配置。
 6. 点击“打开来源设置”选择使用中的网卡。页面的选择会自动保存，没有“下一步”。
@@ -38,11 +44,15 @@
 
 ## 手动导入完整发行包
 
-下载并解压 `Mornye-Observatory-v0.1.2.zip`，以 `wallpaper/index.html` 创建网页壁纸。若编辑器重建项目定义，关闭项目，将包内 `wallpaper/project.json` 复制到导入目录，再重开、保存和应用。
+下载并解压 `Mornye-Observatory-v0.1.3.zip`，以 `wallpaper/index.html` 创建网页壁纸。若编辑器重建项目定义，关闭项目，将包内 `wallpaper/project.json` 复制到导入目录，再重开、保存和应用。
 
 硬件采集时，EXE 的目录要选择导入后的实际项目文件夹。完整包中的 `collector/Mornye-Telemetry.exe` 与单独下载包相同。
 
 已有创意工坊发布项目更新时，要保留其 `workshopid` 和自定义设置。订阅者不需要操作这一项。
+
+## 从 v0.1.2 壁纸升级
+
+手动导入用户先备份项目，替换发行包的壁纸文件时保留自己的 `telemetry-config.local.js`、`telemetry-runtime`、发布ID和已有属性设置。新增视差属性需要新版 `project.json`；已有发布项目合并四个 `parallax*` 属性并保留原 `workshopid`，然后重新加载。已安装的v0.1.2采集器可继续使用，无需升级或重新配置，除非改了实际壁纸目录。创意工坊用户等待作者上传更新。
 
 ## 从旧候选或 v0.1.1 升级
 

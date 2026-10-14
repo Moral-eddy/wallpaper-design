@@ -1,5 +1,5 @@
 {
-  "title": "莫宁 · 星海观测室 0.1.2",
+  "title": "莫宁 · 星海观测室 0.1.3",
   "file": "index.html",
   "type": "web",
   "preview": "preview.jpg",
@@ -206,6 +206,45 @@
         "value": true,
         "order": 24,
         "condition": "individualwindows.value==true"
+      },
+      "parallaxenabled": {
+        "type": "bool",
+        "text": "鼠标视差 · 开启",
+        "value": true,
+        "index": 24,
+        "order": 124
+      },
+      "parallaxstrength": {
+        "type": "slider",
+        "text": "鼠标视差 · 强度（%）",
+        "value": 100,
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "fraction": false,
+        "condition": "parallaxenabled.value==true",
+        "index": 25,
+        "order": 125
+      },
+      "parallaxresponse": {
+        "type": "slider",
+        "text": "鼠标视差 · 缓动时间（毫秒）",
+        "value": 240,
+        "min": 100,
+        "max": 800,
+        "step": 20,
+        "fraction": false,
+        "condition": "parallaxenabled.value==true",
+        "index": 26,
+        "order": 126
+      },
+      "parallaxreturn": {
+        "type": "bool",
+        "text": "鼠标视差 · 移开后回正",
+        "value": true,
+        "condition": "parallaxenabled.value==true",
+        "index": 27,
+        "order": 127
       }
     }
   },

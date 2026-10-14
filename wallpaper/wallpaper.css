@@ -4,3 +4,6 @@ body main { width:100%; height:100%; max-width:none; margin:0; padding:0; }
 main > :not(.viewer), .viewer > :not(#stage) { display:none!important; }
 .viewer { position:absolute; inset:0; margin:0; }
 #stage.stage { position:absolute; inset:0; width:100vw; height:100vh; border:0; aspect-ratio:auto!important; overflow:hidden; }
+
+/* Native artwork stays unchanged; this wrapper supplies reversible camera motion. */
+.parallax-world{position:absolute;inset:0;width:3440px;height:1440px;transform-origin:0 0;isolation:isolate}

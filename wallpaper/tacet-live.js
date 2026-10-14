@@ -21,7 +21,7 @@
 
   const native = window.MORNYE_NATIVE_AUDIO;
   const response = Array(64).fill(0), analysisSpectrum = Array(64).fill(0), zero = Array(64).fill(0);
-  const noAnalysis = {peak:null,centroid:null};
+  const noAnalysis = {peak:null,centroid:null},targetBuffer=Array(64).fill(0);
   const browserBins = values => {
     if (!values?.length) return zero;
     return Array.from({length:64},(_,i) => {
@@ -48,7 +48,7 @@
         && ['online','silent'].includes(browser.frame.status);
       if (fresh) { summary=levels.summarize(browserBins(browser.frame.spectrumLeft),browserBins(browser.frame.spectrumRight)); spectrum=summary.stereoSpectrum; }
     }
-    const targets = enabled && fresh ? levels.shapeTargets(spectrum,summary,settings?.audioGain??1) : zero;
+    const targets = enabled && fresh ? levels.shapeTargets(spectrum,summary,settings?.audioGain??1,targetBuffer) : zero;
     for (let i=0;i<64;i++) {
       const raw = enabled && fresh && spectrum[i]>levels.parameters.noiseFloor ? spectrum[i] : 0;
       const tau = targets[i]>response[i] ? 18 : 120;

@@ -8,6 +8,7 @@
     if (identifiers.includes(item.id)) item.label = item.label.replace('（音频待接入）', '');
   }
   const finite = value => typeof value === 'number' && Number.isFinite(value);
+  const attr=(node,key,value)=>{const text=String(value);if(node.getAttribute(key)!==text)node.setAttribute(key,text);};
   const element = (name, attributes) => {
     const node = document.createElementNS(NS, name);
     for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
@@ -84,12 +85,12 @@
       display.right[i] = smooth(display.right[i], active ? response(current.spectrumRight?.[i]) : 0);
       for (let channel = 0; channel < 2; channel++) {
         const height = 48 * (channel ? display.right[i] : display.left[i]);
-        bars[i][channel].setAttribute('height', height.toFixed(2));
-        bars[i][channel].setAttribute('y', (97 - height).toFixed(2));
+        attr(bars[i][channel],'height',height.toFixed(2));
+        attr(bars[i][channel],'y',(97-height).toFixed(2));
       }
     }
     for (const field of energyFields) display.energy[field] = smooth(display.energy[field], active ? response(current[field]) : 0);
-    for (const gauge of gauges) gauge.node.setAttribute('width', (gauge.width * display.energy[gauge.field]).toFixed(2));
+    for (const gauge of gauges) attr(gauge.node,'width',(gauge.width*display.energy[gauge.field]).toFixed(2));
     for (const [node, field] of readouts) {
       const text = active && finite(current[field]) ? display.energy[field].toFixed(2) : '—';
       if (node.textContent !== text) node.textContent = text;

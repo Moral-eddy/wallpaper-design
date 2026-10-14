@@ -7,8 +7,9 @@
     quiet: {hardwarePollMs:1000,audioPollMs:100,renderFps:20}
   };
   const state = window.MORNYE_SETTINGS = {
-    version:"0.1.0",floatEnabled:true,floatStrength:1.5,hoverEnabled:true,
+    version:"0.1.3",floatEnabled:true,floatStrength:1.5,hoverEnabled:true,
     paneBrightness:1,paneOpacity:1,audioEnabled:true,audioGain:1,
+    parallaxEnabled:true,parallaxStrength:1,parallaxResponseMs:240,parallaxReturn:true,
     refreshMode:"fast",fitMode:"contain",generalFps:60,paused:false,
     ...profiles.fast,windows:{}
   };
@@ -45,6 +46,10 @@
     applyUserProperties(properties){
       if(properties.floatenabled)state.floatEnabled=properties.floatenabled.value===true;
       if(properties.floatstrength)state.floatStrength=clamp(properties.floatstrength.value,0,250,150)/100;
+      if(properties.parallaxenabled)state.parallaxEnabled=properties.parallaxenabled.value===true;
+      if(properties.parallaxstrength)state.parallaxStrength=clamp(properties.parallaxstrength.value,0,200,100)/100;
+      if(properties.parallaxresponse)state.parallaxResponseMs=clamp(properties.parallaxresponse.value,100,800,240);
+      if(properties.parallaxreturn)state.parallaxReturn=properties.parallaxreturn.value===true;
       if(properties.hoverenabled)state.hoverEnabled=properties.hoverenabled.value===true;
       if(properties.windowbrightness)state.paneBrightness=clamp(properties.windowbrightness.value,30,180,100)/100;
       if(properties.windowopacity)state.paneOpacity=clamp(properties.windowopacity.value,10,100,100)/100;

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "sceneSize": [
     3440,
     1440
@@ -8,7 +8,35 @@
   "companionVersion": "0.1.2",
   "runtimeDataDirectory": "selected wallpaper/telemetry-runtime",
   "nativeAudio": true,
-  "userTrialFeedback": "当前候选5本机试用获用户确认；不扩充为其他设备验收",
+  "userProperties": 28,
+  "parallax": {
+    "defaultEnabled": true,
+    "strengthPercent": 100,
+    "responseMs": 240,
+    "returnOnLeave": true,
+    "sceneMaxPx": [
+      10,
+      5
+    ],
+    "paneAdditionalPx": {
+      "back": [
+        4,
+        2
+      ],
+      "middle": [
+        8,
+        4
+      ],
+      "front": [
+        12,
+        6
+      ]
+    }
+  },
+  "waveformGridSteps": 192,
+  "userTrialFeedback": "用户确认本机已重载，视差效果正常；不扩充为其他设备或长期内存验收",
+  "longTermMemoryStatus": "Growth unresolved; no claim of leak fix",
+  "workshopDistribution": "Separate author upload required; GitHub publication does not update Workshop",
   "files": [
     {
       "path": ".gitattributes",
@@ -17,23 +45,23 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 540,
-      "sha256": "5973fe998bb79f137a3306e60e3ef0aa7f2733211e83a165cde2df3466e63a03"
+      "bytes": 568,
+      "sha256": "d31cabec3f0526ed0ce18f89108efc8125fd86ec562237c91d1910920759853a"
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 2793,
-      "sha256": "96e4f4ded86879497edd43ac5c6ffc9d28520b4c90dbd7bd5b6eddadff43b3ee"
+      "bytes": 3679,
+      "sha256": "6bfb7f4fd1cd23f07c5201573bd2c59a344714ee1672d68e766e7072c58a868b"
     },
     {
       "path": "README.md",
-      "bytes": 2937,
-      "sha256": "a9e1269d4e124980951c1367962d017d6591e5dda205a3f39dbd820ad720c44e"
+      "bytes": 3754,
+      "sha256": "b4e06e3dd823ea75d88d13aff1e4253aac3ae0790c107566abd0bd0e3c4242ef"
     },
     {
       "path": "RELEASE_NOTES.md",
       "bytes": 1044,
-      "sha256": "f7d92e2ce57a25e0694da3e4f5cb43c0bc251d80b9938e41a18356302997bd86"
+      "sha256": "31b1e2e437bf59d414bdb2c535aae367222b8f8e543bb746a5921f6e0ee8d01a"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -47,28 +75,28 @@
     },
     {
       "path": "companion/Tcl-license.terms",
-      "bytes": 2255,
-      "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      "bytes": 2295,
+      "sha256": "41613eabfc08921a7da9c4bfd7f3ce5d5406f55214b253d89f392ed86eebeb8f"
     },
     {
       "path": "companion/build-requirements.txt",
-      "bytes": 160,
-      "sha256": "9dde3b746b56f33fef123e7890fccd6a9e13fada8b5bc0817cb8ee8201f61a33"
+      "bytes": 168,
+      "sha256": "75b5b53c7259f0426556cdc02a01135f481742d230ac659073d0ad6d6e5debda"
     },
     {
       "path": "companion/build.ps1",
-      "bytes": 820,
-      "sha256": "dabe0ab400eac2e0fe536d52f2eeecc02111b29839e249416f1ce1f7f345a851"
+      "bytes": 827,
+      "sha256": "fb98b7847685483ee6cf7e782c78017c169db30bf64dc46bf8c3eaadb7941ee9"
     },
     {
       "path": "companion/collector.py",
-      "bytes": 26562,
-      "sha256": "6a4e0dac5b745a78dcf1492c89abb8fd50d9d949431b4bb59349cedf95af22f8"
+      "bytes": 26109,
+      "sha256": "36cfa5bcbc90570f2457bd73c58e64125b39db909afa059c14c0797ef90175ec"
     },
     {
       "path": "companion/companion_core.py",
-      "bytes": 12823,
-      "sha256": "dfe7acb39fbbc9ee694b41874998e4ff73075ff7fe58d3e05633881593943826"
+      "bytes": 12547,
+      "sha256": "e810412571becf3a04c61ecf82c7a19f32b0d6e7ad7ff4ad5dc56bea8bd0f4e1"
     },
     {
       "path": "companion/configure.html",
@@ -97,8 +125,8 @@
     },
     {
       "path": "companion/portable_server.py",
-      "bytes": 6936,
-      "sha256": "f4b812d399ef21922b987f01c8704ac147a6aafbe273b2a672de8850898296c7"
+      "bytes": 6797,
+      "sha256": "eef2e8fe660c92645471337490b274957fb1524dcbe64cd8971f438810a5136d"
     },
     {
       "path": "companion/tests/test-source-page.cjs",
@@ -107,8 +135,8 @@
     },
     {
       "path": "companion/tests/test_companion.py",
-      "bytes": 13716,
-      "sha256": "8df5c436b89702078fe0048ae9cb4118673531edd3420ddf091b2c1936694238"
+      "bytes": 13464,
+      "sha256": "a86e405e88383a4def51b8ee7aa23ccbb32b761a781e80daa02b8a71d6a8e2fa"
     },
     {
       "path": "companion/worker_integrity.py",
@@ -117,8 +145,8 @@
     },
     {
       "path": "docs/INSTALL.md",
-      "bytes": 4511,
-      "sha256": "bfdc4963aa01697d393ec0da9ec735edb1ff77f9f042b0d5a87e89ed9801e963"
+      "bytes": 5547,
+      "sha256": "f36005d717871df51d93cd9b9413f007032d67bed85f0a4be556c73988bc28da"
     },
     {
       "path": "docs/WORKSHOP_TUTORIAL.txt",
@@ -207,8 +235,8 @@
     },
     {
       "path": "wallpaper/audio-live.js",
-      "bytes": 8407,
-      "sha256": "ae65e887bd3dfdc9535ab5e6d00e6c5b0e55feee6d8d875f904ebf5b3a8d540d"
+      "bytes": 8497,
+      "sha256": "8202264e10d89da9ac6e168e122c537fc15c0686611a8aac2c4bee04600c87c6"
     },
     {
       "path": "wallpaper/fonts.css",
@@ -242,8 +270,8 @@
     },
     {
       "path": "wallpaper/index.html",
-      "bytes": 6881,
-      "sha256": "d4e26c40864c9383b35b7fce542bf7c3b714f0e90a4b3c48ecb5cb789f19f3ea"
+      "bytes": 6905,
+      "sha256": "5a0bae20305753719a2a952f1a92b391753ab8257a0d8d5d01e4e675b564e0a2"
     },
     {
       "path": "wallpaper/live-data.css",
@@ -252,13 +280,18 @@
     },
     {
       "path": "wallpaper/live-data.js",
-      "bytes": 19812,
-      "sha256": "f16b8ea4d69f7171951622661f5da762c60031e5013edfe0c6c3bbe7d3af3a6d"
+      "bytes": 20222,
+      "sha256": "ca61f34a8e5e02d936205ff0a0cd6999be8d159bf6ca6a3d817d1104239a5d51"
     },
     {
       "path": "wallpaper/motion.js",
-      "bytes": 12919,
-      "sha256": "1681a553aaec7877e241346c5f662b1a5cac1b87563f7bfa5ad65e0d919151e3"
+      "bytes": 13999,
+      "sha256": "76e389c524e85fef6da49f7dc9c9855e0b3ab2f7a5f8aea6336a48b5afc80b2d"
+    },
+    {
+      "path": "wallpaper/parallax.js",
+      "bytes": 3811,
+      "sha256": "b747f290c8a48a29374559e3839cfdad1de3fcb305fa06c45c157a99d199114c"
     },
     {
       "path": "wallpaper/preview.jpg",
@@ -267,8 +300,8 @@
     },
     {
       "path": "wallpaper/project.json",
-      "bytes": 5929,
-      "sha256": "fe5edb7d6995984a876e30043b85c3be6d72b0a3945e2e41de5774ee75d1ee34"
+      "bytes": 6748,
+      "sha256": "ef8352aebed3467c501f066a447eea38967da38758d55f88b5e800fa4ac783c0"
     },
     {
       "path": "wallpaper/runtime.css",
@@ -287,23 +320,23 @@
     },
     {
       "path": "wallpaper/tacet-live.js",
-      "bytes": 4159,
-      "sha256": "ccba5a117b5fa5d1198772dc77d1d29e2fbb146a4dbcde46bd0817749a19599c"
+      "bytes": 4203,
+      "sha256": "a7c56d3d33cb7e30deec4a80b5924bd89bfea0f5dc2a8a7a65f11886b3e81444"
     },
     {
       "path": "wallpaper/tacet-renderer.js",
-      "bytes": 9757,
-      "sha256": "fec8c9018d5c9143ad214280451659da8e7a49f777de3bec092d73ef14fa9802"
+      "bytes": 10542,
+      "sha256": "1e4e136994192c5cca7026aa9bde0fce556cbd3e7502b9c67de444368f34053b"
     },
     {
       "path": "wallpaper/wallpaper-audio-input.js",
-      "bytes": 1962,
-      "sha256": "afc527b6f9a7db8daae995b070dd33ca250128ecc592df9a88d0d948add8a84b"
+      "bytes": 2325,
+      "sha256": "fcd6dd0c38da486d6c1ac66c6d59c8a2e9c0359cbf3a6ad0b4b3da778f1ed6d8"
     },
     {
       "path": "wallpaper/wallpaper-audio-levels.js",
-      "bytes": 2032,
-      "sha256": "9e54e9c54907ef264c989a4277606e72466757feeca89c4380fdb7c97a7fd716"
+      "bytes": 2410,
+      "sha256": "3b824c9e36e8afefc1feb5b06c5d92cb39db11fb026ccfcc6f4f2c85ce601131"
     },
     {
       "path": "wallpaper/wallpaper-bridge.js",
@@ -317,8 +350,8 @@
     },
     {
       "path": "wallpaper/wallpaper-settings.js",
-      "bytes": 4881,
-      "sha256": "8309f6f707e911c48c070bdc3fd34d052022c6e240932861250f8dae7fd35a91"
+      "bytes": 5396,
+      "sha256": "4ba6aa37d275334546c8a46dbbad562e12babd7d715688e6f196cf3ef4cfc6c6"
     },
     {
       "path": "wallpaper/wallpaper-status.js",
@@ -327,8 +360,8 @@
     },
     {
       "path": "wallpaper/wallpaper.css",
-      "bytes": 446,
-      "sha256": "f15b6b06e4251f35e26ddc5c910fdaee5567f3dd88085c4fdea1f599dd0f1e43"
+      "bytes": 642,
+      "sha256": "ef3aef520bd2aba8663cdad75af595de5daad17e10538c110a24fd5c9c3f2b09"
     }
   ],
   "companionExe": {

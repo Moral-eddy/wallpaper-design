@@ -5,7 +5,7 @@
   if(!A||!stage||!stack)return;
   const sceneWidth=A.nativeSize[0], sceneHeight=A.nativeSize[1];
   const owners=[];
-  let pointer=null, focused=null, active=null, masks=null, elapsed=0, last=0, frame=0;
+  let pointer=null, pointerClient=null, focused=null, active=null, masks=null, elapsed=0, last=0, frame=0;
 
   function multiply(a,b){return a.map(row=>b[0].map((_,j)=>row.reduce((sum,value,k)=>sum+value*b[k][j],0)));}
   function inverse(m){
@@ -58,13 +58,14 @@
     const corners=svg("path",{d:`M1 ${length}V1H${length} M${w-length} 1H${w-1}V${length} M${w-1} ${h-length}V${h-1}H${w-length} M${length} ${h-1}H1V${h-length}`,fill:"none",stroke:"#d5faff","stroke-width":1.7,"stroke-opacity":.86});
     rim.append(corners);plane.append(rim);
     const amplitude=item.id==="gpu"?[.35,1.25]:item.depth==="back"?[.5,1.5]:item.depth==="middle"?[.8,2.4]:[1.1,3.6];
-    const owner={item,root,plane,hit,rim,gradient,amplitude,index,current:[0,0],previous:[0,0],hold:[0,0],weight:0,returning:false};
+    const owner={item,root,plane,hit,rim,gradient,amplitude,index,current:[0,0],previous:[0,0],hold:[0,0],weight:0,returning:false,parallaxX:0,parallaxY:0};
     setBase(owner,item.localToCanvasHomography);
     hit.addEventListener("focus",()=>{if(hit.matches(":focus-visible")){focused=owner;chooseActive(owner);}});
     hit.addEventListener("blur",()=>{if(focused===owner){focused=null;chooseActive(pointer?hitAt(pointer):null);}});
     return owner;
   }
   A.windows.forEach((item,index)=>owners.push(createOwner(item,index)));
+  const hitOrder=[...owners].sort((a,b)=>b.item.stackIndex-a.item.stackIndex);
 
   function canInteract(){return stage.dataset.editorEnabled!=="true"&&stage.dataset.reference!=="true"&&stage.dataset.view!=="plane"&&$("hover-enabled").checked;}
   function canFloat(){return stage.dataset.editorEnabled!=="true"&&stage.dataset.reference!=="true"&&stage.dataset.view!=="plane"&&$("float-enabled").checked&&!reduce.matches;}
@@ -78,11 +79,11 @@
     const i=(y*sceneWidth+x)*4+3;
     return masks.some(mask=>mask[i]>16);
   }
-  function localPoint(owner,p){const base=project(owner.invH,p);return [base[0]-owner.current[0],base[1]-owner.current[1]];}
+  function localPoint(owner,p){const base=project(owner.invH,[p[0]-owner.parallaxX,p[1]-owner.parallaxY]);return [base[0]-owner.current[0],base[1]-owner.current[1]];}
   function hitAt(p){
     if(!canInteract()||covered(p))return null;
     // Later panes retain their original dominance, even where glass is clear.
-    for(const owner of [...owners].sort((a,b)=>b.item.stackIndex-a.item.stackIndex)){
+    for(const owner of hitOrder){
       if(owner.item.editorVisible===false)continue;
       const [w,h]=owner.item.localPaneSize, q=localPoint(owner,p);
       if(q[0]>=0&&q[1]>=0&&q[0]<=w&&q[1]<=h)return owner;
@@ -122,11 +123,13 @@
   }
   stage.addEventListener("pointermove",event=>{
     if(event.pointerType==="touch")return;
+    pointerClient=[event.clientX,event.clientY];
+    window.MORNYE_PARALLAX?.track(event);
     pointer=pointerPoint(event);chooseActive(focused||hitAt(pointer));
     if(active){const q=localPoint(active,pointer);active.gradient.setAttribute("cx",q[0]);active.gradient.setAttribute("cy",q[1]);}
   });
-  stage.addEventListener("pointerleave",()=>{pointer=null;chooseActive(focused);});
-  stage.addEventListener("pointercancel",()=>{pointer=null;chooseActive(focused);});
+  stage.addEventListener("pointerleave",()=>{pointer=null;pointerClient=null;window.MORNYE_PARALLAX?.leave();chooseActive(focused);});
+  stage.addEventListener("pointercancel",()=>{pointer=null;pointerClient=null;window.MORNYE_PARALLAX?.leave();chooseActive(focused);});
   function refresh(){
     const unavailable=stage.dataset.reference==="true"||stage.dataset.view==="plane";
     $("motion-controls").disabled=unavailable;
@@ -135,7 +138,7 @@
     updateStatus();
   }
   document.addEventListener("mornye-settings-change",()=>{if(active&&active.item.editorVisible===false)chooseActive(null);last=0;refresh();});
-  stage.addEventListener("view-change",()=>{pointer=null;focused=null;chooseActive(null);refresh();});
+  stage.addEventListener("view-change",()=>{pointerClient=null;pointer=null;focused=null;chooseActive(null);refresh();});
   stage.addEventListener("attachment-change",event=>{
     const owner=owners.find(o=>o.item.id==="gpu");
     setBase(owner,multiply(translation(event.detail.offset,0),owner.item.localToCanvasHomography));
@@ -145,7 +148,7 @@
   $("hover-enabled").addEventListener("change",refresh);
   $("float-strength").addEventListener("input",updateStatus);
   reduce.addEventListener("change",refresh);
-  document.addEventListener("visibilitychange",()=>{last=0;if(document.hidden){pointer=null;focused=null;chooseActive(null);}});
+  document.addEventListener("visibilitychange",()=>{last=0;if(document.hidden){pointerClient=null;pointer=null;focused=null;chooseActive(null);}});
 
   function idle(owner){
     if(!canFloat())return [0,0];
@@ -160,6 +163,8 @@
     if(document.hidden||window.MORNYE_SETTINGS?.paused||now-frame<1000/Math.min(window.MORNYE_SETTINGS?.renderFps??60,window.MORNYE_SETTINGS?.generalFps??60)-.5)return;
     frame=now;
     const dt=last?Math.min(.12,(now-last)/1000):1/30;last=now;elapsed+=dt;
+    window.MORNYE_PARALLAX?.step(dt);
+    if(pointerClient&&canInteract())pointer=pointerPoint({clientX:pointerClient[0],clientY:pointerClient[1]});
     if(pointer&&!focused)chooseActive(hitAt(pointer));
     for(const owner of owners){
       if(owner.item.editorVisible===false)continue;
@@ -174,17 +179,26 @@
       if(owner.root.dataset.motion!==state)owner.root.dataset.motion=state;
       // Every native SVG pane, including its readouts, shares this delta.
       // The equilibrium and the existing H * T_local floating path are retained.
-      const delta=multiply(multiply(owner.H,translation(...owner.current)),owner.invH), transform=cssMatrix(delta);
+      const parallax=window.MORNYE_PARALLAX;
+      const depth=owner.item.depth==="back"?4:owner.item.depth==="middle"?8:12;
+      owner.parallaxX=parallax?-parallax.x*depth/A.targetMapping.uniformScale:0;
+      owner.parallaxY=parallax?-parallax.y*depth*.5/A.targetMapping.uniformScale:0;
+      const delta=multiply(translation(owner.parallaxX,owner.parallaxY),multiply(multiply(owner.H,translation(...owner.current)),owner.invH)), transform=cssMatrix(delta);
       if(owner.root.style.transform!==transform)owner.root.style.transform=transform;
-      owner.root.style.setProperty("--pane-boost",String(1+.10*owner.weight));
-      owner.root.style.setProperty("--frame-boost",String(1+.24*owner.weight));
-      owner.root.style.setProperty("--text-boost",String(1+.08*owner.weight));
-      owner.rim.style.opacity=String(owner.weight);
+      // Stable hover weights need no style writes or filter invalidation.
+      if(owner.paintedWeight!==owner.weight){
+        owner.root.style.setProperty("--pane-boost",String(1+.10*owner.weight));
+        owner.root.style.setProperty("--frame-boost",String(1+.24*owner.weight));
+        owner.root.style.setProperty("--text-boost",String(1+.08*owner.weight));
+        owner.rim.style.opacity=String(owner.weight);
+        owner.paintedWeight=owner.weight;
+      }
     }
   }
 
   stage.addEventListener("layout-update",()=>{
     pointer=null;focused=null;chooseActive(null);
+    hitOrder.sort((a,b)=>b.item.stackIndex-a.item.stackIndex);
     for(const owner of owners){
       setBase(owner,owner.item.localToCanvasHomography);
       owner.root.style.zIndex=String(owner.item.stackIndex+1);

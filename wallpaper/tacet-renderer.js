@@ -18,7 +18,7 @@
     const ma=a[2]?slopes[lower]:tangent(lower),mb=b[2]?slopes[lower]:tangent(upper);
     return Math.max(0,(2*t*t*t-3*t*t+1)*a[1]+(t*t*t-2*t*t+t)*dx*ma+(-2*t*t*t+3*t*t)*b[1]+(t*t*t-t*t)*dx*mb);
   };
-  const knots=[...new Set([...Array.from({length:385},(_,i)=>i/384),...anchors.map(a=>a[0])])].sort((a,b)=>a-b);
+  const knots=[...new Set([...Array.from({length:193},(_,i)=>i/192),...anchors.map(a=>a[0])])].sort((a,b)=>a-b);
   const cusps=new Set(anchors.filter(a=>a[2]).map(a=>a[0]));
   const responseAt=(values,x)=>{
     const position=Math.max(0,Math.min(63,x*64)),lower=Math.floor(position),fraction=position-lower;
@@ -117,9 +117,16 @@
     // Map normalized audio response to the full available height; zero is the center line.
     // No static amplitude offset.
     const visualLevel=amplitude=>Math.max(0,Math.min(1,amplitude));
+    // Coordinates and envelope depend on the design, not on incoming audio.
+    const points=knots.map(x=>({x:x*halfSpan,y:0,cusp:cusps.has(x)}));
+    const envelope=knots.map(x=>silhouette(x));
+    const segmentSlopes=new Float64Array(points.length-1);
     function quarter(values){
-      const points=knots.map(x=>({x:x*halfSpan,y:x===1?0:-maxHeight*visualLevel(responseAt(values,x))*silhouette(x),cusp:cusps.has(x)}));
-      const segmentSlopes=points.slice(1).map((p,i)=>(p.y-points[i].y)/(p.x-points[i].x));
+      for(let i=0;i<points.length;i++){
+        const x=knots[i];
+        points[i].y=x===1?0:-maxHeight*visualLevel(responseAt(values,x))*envelope[i];
+        if(i>0)segmentSlopes[i-1]=(points[i].y-points[i-1].y)/(points[i].x-points[i-1].x);
+      }
       const smooth=i=>{
         if(i===0)return segmentSlopes[0];
         if(i===points.length-1)return segmentSlopes[segmentSlopes.length-1];
@@ -135,13 +142,24 @@
       return d;
     }
     ghost.setAttribute('d',quarter(Array(64).fill(0)));
+    const previousValues=new Float64Array(64);
+    let painted=false,lastContour=null;
+    const attr=(item,key,value)=>{const text=String(value);if(item.getAttribute(key)!==text)item.setAttribute(key,text);};
     const draw=(values,metrics=analyze(values))=>{
-      const d=quarter(values);contour.setAttribute('d',d);area.setAttribute('d',d+'L0 0Z');
+      let changed=!painted;
+      for(let i=0;i<64;i++)if(previousValues[i]!==values[i])changed=true;
+      if(changed){
+        for(let i=0;i<64;i++)previousValues[i]=values[i];
+        const d=quarter(values);
+        if(d!==lastContour){contour.setAttribute('d',d);area.setAttribute('d',d+'L0 0Z');lastContour=d;}
+        painted=true;
+      }
       for(const field of analysisFields){
         const position=metrics[field.name];
-        field.value.textContent=position===null?'—':field.name==='peak'?String(position).padStart(2,'0'):position.toFixed(1).padStart(4,'0');
-        field.marker.setAttribute('visibility',position===null?'hidden':'visible');
-        if(position!==null){const markerX=field.x+field.slot*position/63;field.marker.setAttribute('d',`M${markerX} ${field.rulerY-4}V${field.rulerY+4}`);}
+        const text=position===null?'—':field.name==='peak'?String(position).padStart(2,'0'):position.toFixed(1).padStart(4,'0');
+        if(field.value.textContent!==text)field.value.textContent=text;
+        attr(field.marker,'visibility',position===null?'hidden':'visible');
+        if(position!==null){const markerX=field.x+field.slot*position/63;attr(field.marker,'d',`M${markerX} ${field.rulerY-4}V${field.rulerY+4}`);}
       }
     };
     draw(Array(64).fill(0));
